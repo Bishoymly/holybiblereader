@@ -1,1 +1,64 @@
-@import "~bootstrap/dist/css/bootstrap.css"
+@import "~bootstrap/dist/css/bootstrap.css";
+
+body {
+    min-height: 75rem;
+    padding-top: 5rem;
+    font-family: sans-serif;
+    padding-bottom: 10em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: serif;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 1.8em;
+    line-height: 1;
+    margin-top: 0.5em;
+    margin-bottom: 0.75em;
+}
+
+h2 {
+    font-size: 1.3em;
+    margin-top: 0.75em;
+}
+
+h3 {
+    font-size: 1.2em;
+    line-height: 1;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+
+a {
+    text-decoration: none;
+    color:#14A;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    display: block;
+    list-style-type: none;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+
+.content{
+    font-size:1.4em;
+}
+
+.arabic {
+    direction: rtl;
+}
+
+.selectedverse {
+    background-color: #FE8;
+}
+
+.hide{
+    display:none;
+}
