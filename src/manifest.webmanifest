@@ -1,6 +1,6 @@
 {
-  "name": "holybiblereader",
-  "short_name": "holybiblereader",
+  "name": "Holy Bible Reader",
+  "short_name": "Bible",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
