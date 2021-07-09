@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { BibleService } from './services/bible.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +8,7 @@ import { BibleService } from './services/bible.service';
 export class AppComponent {
   title = 'Holy Bible Reader';
 
-  constructor(
-    public Bible: BibleService
-  ) { 
-    
+  constructor() {
+
   }
 }

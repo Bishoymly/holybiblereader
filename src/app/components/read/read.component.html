@@ -1,0 +1,9 @@
+<div class="content">
+  <div class="book">
+    <h1>{{Book?.Title}} {{Chapter?.Title}}</h1>
+
+    <div class="justify" *ngFor="let line of GetLines()">
+      <p>{{line}}</p>
+    </div>
+  </div>
+</div>

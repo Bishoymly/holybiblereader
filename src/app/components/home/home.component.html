@@ -6,13 +6,12 @@
     <h2><a href='/kjames'>King James Bible</a></h2>
     <div class="row">
         <div class="col-lg-6" *ngFor='let bookGroup of Bible.Version.BookGroups'>
-            <h3><a href='/kjames/old'>{{ bookGroup.Title }}</a></h3>
+            <h3><a href='{{bookGroup.Url}}'>{{ bookGroup.Title }}</a></h3>
             <ul>
-                <li *ngFor='let book of bookGroup.Books'><a href='{{book.Url}}'>{{book.Title}}</a></li>
+                <li *ngFor='let book of bookGroup.Books'><a href='{{book.Url + "/1" }}'>{{book.Title}}</a></li>
             </ul>
         </div>
     </div>
 </div>
 </div>
 </div>
-            
