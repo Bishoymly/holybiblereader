@@ -34,8 +34,4 @@ export class ReadComponent implements OnInit {
       });
     });
   }
-
-  public GetLines():string[] | undefined {
-    return this.Chapter?.Content?.split(/[\r\n]+/);
-  }
 }

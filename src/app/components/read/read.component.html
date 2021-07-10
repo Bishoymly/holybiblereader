@@ -1,9 +1,39 @@
 <div class="content">
   <div class="book">
-    <h1>{{Book?.Title}} {{Chapter?.Title}}</h1>
+    <div class="title-bar">
+      <div class="btn-group btn-group-lg" role="group">
+        <div class="btn-group" role="group">
+          <button id="booksDrop" type="button" class="btn btn-outline-secondary dropdown-toggle h" data-bs-toggle="dropdown" data-bs-custom-class="books" aria-expanded="false">
+            {{Book?.Title}}
+          </button>
+          <div class="dropdown-menu books-selector" aria-labelledby="booksDrop">
+            <div class="row">
+              <div class="col-lg-6" *ngFor='let bookGroup of Bible.Version.BookGroups'>
+                  <h3><a [routerLink]="['/' + bookGroup.Url]">{{ bookGroup.Title }}</a></h3>
+                  <ul>
+                      <li *ngFor='let book of bookGroup.Books'><a [routerLink]="['/' + book.Url, 1]">{{book.Title}}</a></li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group btn-group-lg" role="group">
+          <button id="chaptersDrop" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            {{Chapter?.Title}}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="chaptersDrop">
+            <li *ngFor="let chapter of Book?.Chapters"><a class="dropdown-item" [routerLink]="['/' + chapter.Url]">{{chapter.Title}}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-    <div class="justify" *ngFor="let line of GetLines()">
-      <p>{{line}}</p>
+    <div class="justify">
+      <span *ngFor="let verse of Chapter?.Verses" id="{{verse.Number}}">
+        <sup>{{verse.Number}}</sup> {{verse.Text}}
+        <br *ngIf="verse.IsEndOfParagraph" />
+        <br *ngIf="verse.IsEndOfParagraph" />
+      </span>
     </div>
   </div>
 </div>

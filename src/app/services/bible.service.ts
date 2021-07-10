@@ -30,6 +30,7 @@ export class BibleService {
 
     this.http.get('/assets/'+version.Url+'/index.txt', {responseType: 'text'})
         .subscribe((data) => {
+            console.log('/assets/'+version.Url+'/index.txt');
             var i = 0;
             for (const line of data.split(/[\r\n]+/)){
 
@@ -68,34 +69,42 @@ export class BibleService {
         });
   }
 
+  public ProcessChapters(book : Book){
+    if (book.IsLoaded.value == false)
+    {
+        this.processChapters(book, true);
+    }
+  }
+
   private processChapters(book:Book, loadData:boolean){
 
     this.http.get('/assets/'+book.Version.Url + '/' + book.UniqueId+'.txt', {responseType: 'text'})
       .subscribe((full) => {
+        console.log('/assets/'+book.Version.Url + '/' + book.UniqueId+'.txt');
         var chapter : Chapter | null = null;
         var str : string = '';
         for (const line of full.split(/[\r\n]+/)){
-            if (line.startsWith('==')){
-                if (chapter!=null)
-                {
-                    chapter.Content = this.processContent(str, chapter);
-                    str = '';
-                }
-
-                var ch = parseInt(line.replace(/==/g, ''));
-                chapter = new Chapter(book);
-                chapter.UniqueId = ch.toString();
-                chapter.Url = book.Url + "/" + ch.toString();
-                chapter.Book = book;
-                chapter.Title = ch.toString();
-                book.Chapters.push(chapter);
-            }
-            else
+          if (line.startsWith('==')){
+            if (chapter!=null)
             {
-              if (!line.startsWith("Chapter ") && !line.startsWith("الأصحاح ") && !line.startsWith("Psalm ") && !line.startsWith("مزمور ")){
-                str += line + '\r\n';
-              }
+                chapter.Content = this.processContent(str, chapter);
+                str = '';
             }
+
+            var ch = parseInt(line.replace(/==/g, ''));
+            chapter = new Chapter(book);
+            chapter.UniqueId = ch.toString();
+            chapter.Url = book.Url + "/" + ch.toString();
+            chapter.Book = book;
+            chapter.Title = ch.toString();
+            book.Chapters.push(chapter);
+          }
+          else
+          {
+            if (!line.startsWith("Chapter ") && !line.startsWith("الأصحاح ") && !line.startsWith("Psalm ") && !line.startsWith("مزمور ")){
+              str += line + '\r\n';
+            }
+          }
         }
 
         if(chapter!=null){
@@ -106,57 +115,46 @@ export class BibleService {
       });
   }
 
-  public ProcessChapters(book : Book){
-      if (book.IsLoaded.value == false)
-      {
-          this.processChapters(book, true);
-      }
-  }
-
   private processContent(body : string, chapter : Chapter) : string {
 
-      body = body.trim();
-      //body = body.replace(/\r\n\r\n\r\n/g, '');
+    body = body.trim();
+    //body = body.replace((char)160, (char)32);
 
-      //body = body.replace(/\n/g, '').replace(/\r/g, '');
-      //body = body.replace((char)160, (char)32);
+    //Index verses
+    var verse = 1;
+    var verseStart = 0;
 
-      //Index verses
-      var verse = 1;
-      var verseStart = 0;
-      var spanOpened = false;
-      while (true)
-      {
-          var index = body.indexOf(verse.toString() + " ", verseStart);
-          if (index == -1)
-              break;
-          else
-          {
-              if (spanOpened)
-              {
-                  var v = new Verse();
-                  v.Number = (verse - 1).toString();
-                  v.Url = chapter.Url + "#" + (verse - 1).toString();
-                  v.Text = chapter.Title + " : " + (verse - 1).toString() + "  " + body.substring(verseStart, index - verseStart).trim();
-                  v.SearchableText = this.MakeSearchable(body.substring(verseStart, index - verseStart).trim());
-                  chapter.Book.Verses.push(v);
-              }
-              spanOpened = true;
-              verseStart = index + verse.toString().length;
-              verse++;
-          }
+    verseStart = body.indexOf(verse.toString() + " ", verseStart);
+
+    do
+    {
+      //find next verse number
+      verseStart += verse.toString().length + 1;
+      var nextStart = body.indexOf((verse+1).toString() + " ", verseStart);
+
+      if(nextStart > -1){
+        this.createVerse(chapter, verse, body.substring(verseStart, nextStart));
       }
-      if (spanOpened)
-      {
-          var v = new Verse();
-          v.Number = (verse - 1).toString();
-          v.Url = chapter.Url + "#" + (verse - 1).toString();
-          v.Text = chapter.Title + " : " + (verse - 1).toString() + "  " + body.substring(verseStart).trim();
-          v.SearchableText = this.MakeSearchable(body.substring(verseStart).trim());
-          chapter.Book.Verses.push(v);
+      else{
+        this.createVerse(chapter, verse, body.substring(verseStart));
       }
+      verseStart = nextStart;
+      verse++;
+    }
+    while(verseStart>-1);
 
-      return body;
+    return body;
+  }
+
+  private createVerse(chapter:Chapter, num:number, body:string):Verse{
+    var v = new Verse();
+    v.Number = num;
+    v.Url = chapter.Url + "#" + num;
+    v.Text = body;
+    v.SearchableText = this.MakeSearchable(body.trim());
+    chapter.Verses.push(v);
+    chapter.Book.Verses.push(v);
+    return v;
   }
 
   public MakeSearchable(word:string){

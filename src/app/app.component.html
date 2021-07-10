@@ -1,11 +1,11 @@
 <div class="container">
   <nav class="navbar fixed-top navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">
+      <a class="navbar-brand" [routerLink]="['/']">
         <img src="/assets/icons/icon-24.png" alt="" height="24" class="d-inline-block align-text-top">
         Holy Bible Reader
       </a>
-      
+
       <div class="d-flex">
           <span class="bookmarktext col hide"></span>
           <input id="q" name="q" class="form-control col me-2 search" placeholder="Search" aria-label="Search" value='' />
@@ -14,5 +14,5 @@
   </nav>
 
   <router-outlet></router-outlet>
-  
+
 </div>

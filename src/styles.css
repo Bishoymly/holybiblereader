@@ -1,5 +1,3 @@
-@import "~bootstrap/dist/css/bootstrap.css";
-
 body {
     min-height: 75rem;
     padding-top: 5rem;
@@ -7,7 +5,12 @@ body {
     padding-bottom: 10em;
 }
 
-h1, h2, h3, h4, h5, h6 {
+.title-bar {
+  margin-top: 0.5em;
+  margin-bottom: 0.75em;
+}
+
+h1, h2, h3, h4, h5, h6, .h {
     font-family: serif;
     font-weight: normal;
 }
@@ -53,7 +56,7 @@ ul {
 }
 
 .content{
-    font-size:1.4em;
+  font-size:1.4em;
 }
 
 .arabic {
@@ -66,4 +69,9 @@ ul {
 
 .hide{
     display:none;
+}
+
+.books-selector{
+  padding: 1em;
+  width: 1000px;
 }
