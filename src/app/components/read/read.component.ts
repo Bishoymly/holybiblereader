@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, ParamMap, UrlSegment } from '@angular/router';
 import { Book } from 'src/app/models/book';
 import { Chapter } from 'src/app/models/chapter';
@@ -16,6 +17,8 @@ export class ReadComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router : Router,
+    private titleService: Title,
     public Bible: BibleService
   ) { }
 
@@ -29,9 +32,22 @@ export class ReadComponent implements OnInit {
           this.Bible.ProcessChapters(this.Book);
           this.Book.IsLoaded.subscribe(loaded => {
             this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == url[3].path);
+            if(this.Chapter){
+              this.titleService.setTitle(this.Chapter.ToString());
+            }
           })
         }
       });
     });
+  }
+
+  public OpenNext(){
+    let ch = parseInt(this.Chapter?.UniqueId??'1') + 1;
+    this.router.navigateByUrl('/' + this.Book?.Url + '/' + ch.toString());
+  }
+
+  public OpenPrevious(){
+    let ch = parseInt(this.Chapter?.UniqueId??'1') - 1;
+    this.router.navigateByUrl('/' + this.Book?.Url + '/' + ch.toString());
   }
 }

@@ -1,7 +1,23 @@
 export class Verse {
 
   public Number: number = 0;
-  public Text: string = '';
+  private _Text: string = '';
+  public get Text(): string {
+    return this._Text;
+  }
+  public set Text(value: string) {
+    this._Text = '<sup aria-hidden="true">' + this.Number + '</sup> ' + value.replace(/{(.*)}/g,'');
+
+    // putting word definitions
+    var match = value.match(/{(.*):(.*)}/);
+    if(match){
+      if(match.length>=2){
+        var word = match[1].replace('…','');
+        var meaning = match[2];
+        this._Text = this._Text.replace(word, '<dfn title="'+meaning+'">'+word+'</dfn>');
+      }
+    }
+  }
   public SearchableText: string = '';
   public Url:string = '';
   public get IsEndOfParagraph(): boolean {
@@ -12,7 +28,7 @@ export class Verse {
       let v: Verse = new Verse();
       v.Number = this.Number;
       v.Url = this.Url;
-      v.Text = this.Text;
+      v._Text = this._Text;
       v.SearchableText = this.SearchableText;
       return v;
   }

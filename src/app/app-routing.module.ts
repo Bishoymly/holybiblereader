@@ -4,8 +4,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ReadComponent } from './components/read/read.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: '**', component: ReadComponent },
+  { path: '', component: HomeComponent, data: {animation: 0}},
+  { path: 'kjames/:group/:book/:animation', component: ReadComponent },
+  /*{ path: '**', component: ReadComponent, data: {animation: 2} },*/
 ];
 
 @NgModule({

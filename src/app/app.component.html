@@ -1,5 +1,5 @@
 <div class="container">
-  <nav class="navbar fixed-top navbar-light bg-light">
+  <nav class="navbar fixed-top navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" [routerLink]="['/']">
         <img src="/assets/icons/icon-24.png" alt="" height="24" class="d-inline-block align-text-top">
@@ -13,6 +13,8 @@
     </div>
   </nav>
 
-  <router-outlet></router-outlet>
+  <div [@routeAnimations]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
 
 </div>
