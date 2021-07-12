@@ -1,20 +1,33 @@
-<div class="container">
-  <nav class="navbar fixed-top navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" [routerLink]="['/']">
-        <img src="/assets/icons/icon-24.png" alt="" height="24" class="d-inline-block align-text-top">
-        Holy Bible Reader
-      </a>
-
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="['/']">
+      <img src="/assets/icons/icon-24.png" alt="" height="24" class="d-inline-block align-text-top">
+      Holy Bible Reader
+    </a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!--<li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>-->
+      </ul>
       <div class="d-flex">
           <span class="bookmarktext col hide"></span>
-          <input id="q" name="q" class="form-control col me-2 search" placeholder="Search" aria-label="Search" value='' />
+          <input id="q" name="q" class="form-control col-2 me-2 search" placeholder="Search" aria-label="Search" value='' />
       </div>
     </div>
-  </nav>
-
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="container">
   <div [@routeAnimations]="prepareRoute(outlet)">
     <router-outlet #outlet="outlet"></router-outlet>
   </div>
-
 </div>
