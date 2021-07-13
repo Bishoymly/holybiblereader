@@ -14,7 +14,7 @@ export class Verse {
       if(match.length>=2){
         var word = match[1].replace('…','');
         var meaning = match[2];
-        this._Text = this._Text.replace(word, '<dfn title="'+meaning+'">'+word+'</dfn>');
+        this._Text = this._Text.replace(word, '<dfn tabindex="0" title="'+meaning+'">'+word+'</dfn>');
       }
     }
   }
