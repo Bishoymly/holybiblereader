@@ -84,7 +84,7 @@ dfn{
 .books-selector{
   padding: 0em 1em 2em 1em;
   font-size: 1em;
-  min-width: 50vw;
+  min-width: 60vw;
 }
 
 @media (min-width: 576px){

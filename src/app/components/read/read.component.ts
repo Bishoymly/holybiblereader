@@ -12,6 +12,11 @@ import { BibleService } from 'src/app/services/bible.service';
 })
 export class ReadComponent implements OnInit {
 
+  static readonly LEFT_ARROW = "37";
+  static readonly UP_ARROW = "38";
+  static readonly RIGHT_ARROW = "39";
+  static readonly DOWN_ARROW = "40";
+
   public Book : Book | undefined;
   public Chapter: Chapter | undefined;
 
