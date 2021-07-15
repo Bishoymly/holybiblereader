@@ -47,12 +47,40 @@ export class ReadComponent implements OnInit {
   }
 
   public OpenNext(){
-    let ch = parseInt(this.Chapter?.UniqueId??'1') + 1;
-    this.router.navigateByUrl('/' + this.Book?.Url + '/' + ch.toString());
+    if(this.Book && this.Chapter){
+      let ch = this.Chapter.Number + 1;
+      if(ch > this.Book.Chapters.length){
+        let b = this.Bible.Version.Books.indexOf(this.Book);
+        b++;
+        if(b<this.Bible.Version.Books.length)
+        {
+          this.Book = this.Bible.Version.Books[b];
+          ch = 1;
+          this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
+        }
+      }
+      else{
+        this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
+      }
+    }    
   }
 
   public OpenPrevious(){
-    let ch = parseInt(this.Chapter?.UniqueId??'1') - 1;
-    this.router.navigateByUrl('/' + this.Book?.Url + '/' + ch.toString());
+    if(this.Book && this.Chapter){
+      let ch = this.Chapter.Number - 1;
+      if(ch<1){
+        let b = this.Bible.Version.Books.indexOf(this.Book);
+        b--;
+        if(b>=0)
+        {
+          this.Book = this.Bible.Version.Books[b];
+          ch = this.Book.Chapters.length;
+          this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
+        }
+      }
+      else{
+        this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
+      }
+    }
   }
 }
