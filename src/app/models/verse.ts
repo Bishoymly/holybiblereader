@@ -20,6 +20,7 @@ export class Verse {
   }
   public SearchableText: string = '';
   public Url:string = '';
+  public IsSelected: boolean = false;
   public get IsEndOfParagraph(): boolean {
     return this.Text.indexOf('\r\n')>-1;
   }

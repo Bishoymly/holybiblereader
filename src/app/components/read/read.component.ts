@@ -1,24 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, ParamMap, UrlSegment } from '@angular/router';
 import { Book } from 'src/app/models/book';
 import { Chapter } from 'src/app/models/chapter';
+import { Verse } from 'src/app/models/verse';
 import { BibleService } from 'src/app/services/bible.service';
 
 @Component({
   selector: 'app-read',
   templateUrl: './read.component.html',
-  styleUrls: ['./read.component.css']
+  styleUrls: ['./read.component.css'],
 })
 export class ReadComponent implements OnInit {
 
-  static readonly LEFT_ARROW = "37";
-  static readonly UP_ARROW = "38";
-  static readonly RIGHT_ARROW = "39";
-  static readonly DOWN_ARROW = "40";
-
   public Book : Book | undefined;
   public Chapter: Chapter | undefined;
+  public Verse: Verse | undefined;
+  public VerseNumber: number = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -81,6 +79,40 @@ export class ReadComponent implements OnInit {
       else{
         this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
       }
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  keyDown(event: KeyboardEvent) {
+    switch(event.code){
+    case 'ArrowRight':
+      if(this.Chapter){  
+        if(this.Verse){
+          this.Verse.IsSelected = false;
+        }
+        this.VerseNumber++;
+        if(this.VerseNumber<=this.Chapter.Verses.length){
+          this.Verse = this.Chapter.Verses[this.VerseNumber];
+          this.Verse.IsSelected = true;  
+        }
+      }
+      break;
+
+    case 'ArrowLeft':
+      if(this.Chapter){  
+        if(this.Verse){
+          this.Verse.IsSelected = false;
+        }
+        
+        if(this.VerseNumber>0){
+          this.VerseNumber--;
+          this.Verse = this.Chapter.Verses[this.VerseNumber];
+          this.Verse.IsSelected = true;  
+        }
+      }
+      break;
+    default:
+      break;
     }
   }
 }

@@ -34,7 +34,7 @@
 
     <div class="justify">
       <span *ngFor="let verse of Chapter?.Verses">
-        <span id="{{verse.Number}}" [innerHTML]="verse.Text" class="user-select-all"></span>
+        <span id="{{verse.Number}}" [ngClass]="{'selectedverse':verse.IsSelected}" [innerHTML]="verse.Text" (click)="this.Verse = verse;verse.IsSelected = !verse.IsSelected;this.VerseNumber=verse.Number-1"></span>
         <br *ngIf="verse.IsEndOfParagraph" />
         <br *ngIf="verse.IsEndOfParagraph" />
       </span>
