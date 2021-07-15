@@ -93,6 +93,7 @@ export class BibleService {
 
             var ch = parseInt(line.replace(/==/g, ''));
             chapter = new Chapter(book);
+            chapter.Number = ch;
             chapter.UniqueId = ch.toString();
             chapter.Url = book.Url + "/" + ch.toString();
             chapter.Book = book;
@@ -110,7 +111,7 @@ export class BibleService {
         if(chapter!=null){
           chapter.Content = this.processContent(str, chapter);
         }
-
+        book.Chapters.sort((a, b)=> a.Number - b.Number);
         book.IsLoaded.next(true);
       });
   }

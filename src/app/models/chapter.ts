@@ -4,6 +4,7 @@ import { Verse } from "./verse";
 export class Chapter {
 
   public Title: string = '';
+  public Number: number = 0;
   public Url: string ='';
   public UniqueId: string ='';
   public OriginalContent: string = '';
