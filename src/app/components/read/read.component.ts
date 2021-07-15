@@ -60,7 +60,7 @@ export class ReadComponent implements OnInit {
       else{
         this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
       }
-    }    
+    }
   }
 
   public OpenPrevious(){
@@ -86,28 +86,37 @@ export class ReadComponent implements OnInit {
   keyDown(event: KeyboardEvent) {
     switch(event.code){
     case 'ArrowRight':
-      if(this.Chapter){  
+      if(this.Chapter){
         if(this.Verse){
           this.Verse.IsSelected = false;
         }
         this.VerseNumber++;
         if(this.VerseNumber<=this.Chapter.Verses.length){
           this.Verse = this.Chapter.Verses[this.VerseNumber];
-          this.Verse.IsSelected = true;  
+          if(this.Verse){
+            document.getElementById(this.Verse.Number.toString())?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+              inline: "nearest"
+              });
+            //this.router.navigate([], { fragment: this.Verse.Number.toString() });
+            this.Verse.IsSelected = true;
+          }
         }
       }
       break;
 
     case 'ArrowLeft':
-      if(this.Chapter){  
+      if(this.Chapter){
         if(this.Verse){
           this.Verse.IsSelected = false;
         }
-        
+
         if(this.VerseNumber>0){
           this.VerseNumber--;
           this.Verse = this.Chapter.Verses[this.VerseNumber];
-          this.Verse.IsSelected = true;  
+          this.router.navigate([], { fragment: this.Verse.Number.toString() });
+          this.Verse.IsSelected = true;
         }
       }
       break;

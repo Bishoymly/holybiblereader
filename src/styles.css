@@ -68,6 +68,10 @@ ul {
     direction: rtl;
 }
 
+span{
+  transition: background-color 0.3s ease;
+}
+
 .selectedverse {
     background-color: #FE8;
 }
