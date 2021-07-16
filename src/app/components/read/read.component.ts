@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, ParamMap, UrlSegment } from '@angular/router';
@@ -21,11 +22,16 @@ export class ReadComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public router : Router,
+    private viewportScroller: ViewportScroller,
     private titleService: Title,
     public Bible: BibleService
   ) { }
 
   ngOnInit(): void {
+    
+  }
+
+  ngAfterViewChecked(): void {
     this.route.url.subscribe( route => {
       var url = route;
       this.Bible.Loaded.subscribe( loaded => {
@@ -37,7 +43,7 @@ export class ReadComponent implements OnInit {
             if(this.Chapter){
               this.titleService.setTitle(this.Chapter.ToString());
               if(this.route.snapshot.fragment){
-                this.setVerse(parseInt(this.route.snapshot.fragment));          
+                this.setVerse(parseInt(this.route.snapshot.fragment));
               }
             }
           })
@@ -46,7 +52,9 @@ export class ReadComponent implements OnInit {
     });
 
     this.route.fragment.subscribe(fragment =>{
-      this.setVerse(parseInt(fragment??'0'));
+      if(fragment){
+        this.setVerse(parseInt(fragment));
+      }      
     });
   }
 
@@ -79,9 +87,15 @@ export class ReadComponent implements OnInit {
           ch = this.Book.Chapters.length;
         }
       }
-        
-      this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == ch.toString());
-      this.router.navigate([this.Book.Url, ch.toString()], { fragment: this.Chapter?.Verses.length.toString() });
+      
+      if(ch == 0){
+        ch = 1;
+        this.router.navigate([this.Book.Url, ch.toString()]);
+      }
+      else{
+        this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == ch.toString());
+        this.router.navigate([this.Book.Url, ch.toString()], { fragment: this.Chapter?.Verses.length.toString() });
+      }
     }
   }
 
@@ -95,22 +109,22 @@ export class ReadComponent implements OnInit {
     this.Verse = this.Chapter?.Verses[this.VerseNumber - 1];
     if(this.Verse){
       this.Verse.IsSelected = true;
-      //this.router.navigate([], { fragment: this.Verse.Number.toString() });
-      /*document.getElementById(this.Verse.Number.toString())?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-        inline: "nearest"
-        });*/
+      if(this.VerseNumber === 1){
+        this.viewportScroller.scrollToPosition([0,0]);
+      }
+      else{
+        this.viewportScroller.scrollToAnchor(this.VerseNumber.toString());
+      }      
     }
   }
 
-  @HostListener('window:keydown', ['$event'])
-  keyDown(event: KeyboardEvent) {
+  @HostListener('window:keyup', ['$event'])
+  keyUp(event: KeyboardEvent) {
     switch(event.code){
     case 'ArrowRight':
       if(this.Chapter){
         if(this.VerseNumber<this.Chapter.Verses.length){
-          this.router.navigate([], { fragment: (this.VerseNumber+1).toString() });
+          this.router.navigate([], { fragment: (this.VerseNumber+1).toString(), replaceUrl: false });
         }
         else{
           this.nextChapter();
@@ -121,7 +135,7 @@ export class ReadComponent implements OnInit {
     case 'ArrowLeft':
       if(this.Chapter){
         if(this.VerseNumber>1){
-          this.router.navigate([], { fragment: (this.VerseNumber-1).toString() });
+          this.router.navigate([], { fragment: (this.VerseNumber-1).toString(), replaceUrl: false});
         }
         else{
           this.previousChapter();
