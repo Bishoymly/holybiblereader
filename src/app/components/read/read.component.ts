@@ -58,7 +58,7 @@ export class ReadComponent implements OnInit {
     });
   }
 
-  nextChapter(){
+  nextChapter(selectVerse = false){
     if(this.Book && this.Chapter){
       let ch = this.Chapter.Number + 1;
       if(ch > this.Book.Chapters.length){
@@ -71,11 +71,17 @@ export class ReadComponent implements OnInit {
         }
       }
 
-      this.router.navigate([this.Book.Url, ch.toString()], { fragment: '1' });
+      if(selectVerse){
+        this.router.navigate([this.Book.Url, ch.toString()], { fragment: '1' });
+      }
+      else{
+        this.VerseNumber = 0;
+        this.router.navigate([this.Book.Url, ch.toString()]);
+      }
     }
   }
 
-  previousChapter(){
+  previousChapter(selectVerse = false){
     if(this.Book && this.Chapter){
       let ch = this.Chapter.Number - 1;
       if(ch<1){
@@ -90,11 +96,15 @@ export class ReadComponent implements OnInit {
       
       if(ch == 0){
         ch = 1;
-        this.router.navigate([this.Book.Url, ch.toString()]);
       }
-      else{
+      
+      if(selectVerse){
         this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == ch.toString());
         this.router.navigate([this.Book.Url, ch.toString()], { fragment: this.Chapter?.Verses.length.toString() });
+      }
+      else{
+        this.VerseNumber = 0;
+        this.router.navigate([this.Book.Url, ch.toString()]);
       }
     }
   }
@@ -127,7 +137,7 @@ export class ReadComponent implements OnInit {
           this.router.navigate([], { fragment: (this.VerseNumber+1).toString(), replaceUrl: false });
         }
         else{
-          this.nextChapter();
+          this.nextChapter(true);
         }
       }
       break;
@@ -138,7 +148,7 @@ export class ReadComponent implements OnInit {
           this.router.navigate([], { fragment: (this.VerseNumber-1).toString(), replaceUrl: false});
         }
         else{
-          this.previousChapter();
+          this.previousChapter(true);
         }
       }
       break;
