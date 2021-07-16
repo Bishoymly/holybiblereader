@@ -2,7 +2,7 @@
   <div class="book">
     <div class="title-bar">
       <div class="btn-group" role="group">
-        <button type="button" class="btn btn-outline-dark" (click)="OpenPrevious()">Previous</button>
+        <button type="button" class="btn btn-outline-dark" (click)="previousChapter()">Previous</button>
         <div class="btn-group btn-group" role="group">
           <button id="booksDrop" type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-custom-class="books" aria-expanded="false">
             {{Book?.Title}}
@@ -26,7 +26,7 @@
             <li *ngFor="let chapter of Book?.Chapters"><a class="dropdown-item" [routerLink]="['/' + chapter.Url]">{{chapter.Title}}</a></li>
           </ul>
         </div>
-        <button type="button" class="btn btn-outline-dark" (click)="OpenNext()">Next</button>
+        <button type="button" class="btn btn-outline-dark" (click)="nextChapter()">Next</button>
       </div>
     </div>
 
@@ -34,7 +34,7 @@
 
     <div class="justify">
       <span *ngFor="let verse of Chapter?.Verses">
-        <span id="{{verse.Number}}" [ngClass]="{'selectedverse':verse.IsSelected}" [innerHTML]="verse.Text" (click)="this.Verse = verse;verse.IsSelected = !verse.IsSelected;this.VerseNumber=verse.Number-1"></span>
+        <span id="{{verse.Number}}" [ngClass]="{'selectedverse':verse.IsSelected}" [innerHTML]="verse.Text" (click)="this.router.navigate([], { fragment: (verse.Number).toString() });"></span>
         <br *ngIf="verse.IsEndOfParagraph" />
         <br *ngIf="verse.IsEndOfParagraph" />
       </span>

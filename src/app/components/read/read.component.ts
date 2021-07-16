@@ -20,7 +20,7 @@ export class ReadComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router : Router,
+    public router : Router,
     private titleService: Title,
     public Bible: BibleService
   ) { }
@@ -28,7 +28,6 @@ export class ReadComponent implements OnInit {
   ngOnInit(): void {
     this.route.url.subscribe( route => {
       var url = route;
-
       this.Bible.Loaded.subscribe( loaded => {
         this.Book = this.Bible.Version.Books.find(b=>b.UniqueId == url[2].path);
         if(this.Book){
@@ -37,14 +36,21 @@ export class ReadComponent implements OnInit {
             this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == url[3].path);
             if(this.Chapter){
               this.titleService.setTitle(this.Chapter.ToString());
+              if(this.route.snapshot.fragment){
+                this.setVerse(parseInt(this.route.snapshot.fragment));          
+              }
             }
           })
         }
       });
     });
+
+    this.route.fragment.subscribe(fragment =>{
+      this.setVerse(parseInt(fragment??'0'));
+    });
   }
 
-  public OpenNext(){
+  nextChapter(){
     if(this.Book && this.Chapter){
       let ch = this.Chapter.Number + 1;
       if(ch > this.Book.Chapters.length){
@@ -54,31 +60,47 @@ export class ReadComponent implements OnInit {
         {
           this.Book = this.Bible.Version.Books[b];
           ch = 1;
-          this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
         }
       }
-      else{
-        this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
-      }
+
+      this.router.navigate([this.Book.Url, ch.toString()], { fragment: '1' });
     }
   }
 
-  public OpenPrevious(){
+  previousChapter(){
     if(this.Book && this.Chapter){
       let ch = this.Chapter.Number - 1;
       if(ch<1){
         let b = this.Bible.Version.Books.indexOf(this.Book);
         b--;
-        if(b>=0)
+        if(b>0)
         {
           this.Book = this.Bible.Version.Books[b];
           ch = this.Book.Chapters.length;
-          this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
         }
       }
-      else{
-        this.router.navigateByUrl('/' + this.Book.Url + '/' + ch.toString());
-      }
+        
+      this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == ch.toString());
+      this.router.navigate([this.Book.Url, ch.toString()], { fragment: this.Chapter?.Verses.length.toString() });
+    }
+  }
+
+  setVerse(num : number){
+
+    if(this.Verse){
+      this.Verse.IsSelected = false;
+    }
+
+    this.VerseNumber = num;
+    this.Verse = this.Chapter?.Verses[this.VerseNumber - 1];
+    if(this.Verse){
+      this.Verse.IsSelected = true;
+      //this.router.navigate([], { fragment: this.Verse.Number.toString() });
+      /*document.getElementById(this.Verse.Number.toString())?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+        });*/
     }
   }
 
@@ -87,36 +109,22 @@ export class ReadComponent implements OnInit {
     switch(event.code){
     case 'ArrowRight':
       if(this.Chapter){
-        if(this.Verse){
-          this.Verse.IsSelected = false;
+        if(this.VerseNumber<this.Chapter.Verses.length){
+          this.router.navigate([], { fragment: (this.VerseNumber+1).toString() });
         }
-        this.VerseNumber++;
-        if(this.VerseNumber<=this.Chapter.Verses.length){
-          this.Verse = this.Chapter.Verses[this.VerseNumber];
-          if(this.Verse){
-            document.getElementById(this.Verse.Number.toString())?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-              inline: "nearest"
-              });
-            //this.router.navigate([], { fragment: this.Verse.Number.toString() });
-            this.Verse.IsSelected = true;
-          }
+        else{
+          this.nextChapter();
         }
       }
       break;
 
     case 'ArrowLeft':
       if(this.Chapter){
-        if(this.Verse){
-          this.Verse.IsSelected = false;
+        if(this.VerseNumber>1){
+          this.router.navigate([], { fragment: (this.VerseNumber-1).toString() });
         }
-
-        if(this.VerseNumber>0){
-          this.VerseNumber--;
-          this.Verse = this.Chapter.Verses[this.VerseNumber];
-          this.router.navigate([], { fragment: this.Verse.Number.toString() });
-          this.Verse.IsSelected = true;
+        else{
+          this.previousChapter();
         }
       }
       break;
