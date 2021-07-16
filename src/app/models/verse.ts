@@ -1,11 +1,13 @@
 export class Verse {
 
   public Number: number = 0;
+  public OriginalText: string = '';
   private _Text: string = '';
   public get Text(): string {
     return this._Text;
   }
   public set Text(value: string) {
+    this.OriginalText = value.replace(/{(.*)}/g,'');
     this._Text = '<sup aria-hidden="true">' + this.Number + '</sup> ' + value.replace(/{(.*)}/g,'');
 
     // putting word definitions

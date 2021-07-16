@@ -147,6 +147,18 @@ export class ReadComponent implements OnInit {
     }    
   }
 
+  copy(){
+    navigator.clipboard.writeText(this.Chapter?.ToString() + ':'+this.Verse?.Number + ' ' + this.Verse?.OriginalText);
+  }
+
+  share(){
+    navigator.share({
+      title: this.Chapter?.ToString() + ':'+this.Verse?.Number,
+      text: this.Verse?.OriginalText,
+      url: window.location.toString()
+    });
+  }
+
   @HostListener('window:keyup', ['$event'])
   keyUp(event: KeyboardEvent) {
     switch(event.code){

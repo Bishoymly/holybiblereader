@@ -39,5 +39,42 @@
         <br *ngIf="verse.IsEndOfParagraph" />
       </span>
     </div>
+
+    <div class="title-bar">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-dark" (click)="previousChapter()">Previous</button>
+        <div class="btn-group btn-group" role="group">
+          <button id="booksDrop" type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-custom-class="books" aria-expanded="false">
+            {{Book?.Title}}
+          </button>
+          <div class="dropdown-menu books-selector wcontainer shadow-lg p-3 mb-5 bg-body rounded" aria-labelledby="booksDrop">
+            <div class="row">
+              <div class="col-lg-6" *ngFor='let bookGroup of Bible.Version.BookGroups'>
+                  <h3><a [routerLink]="['/' + bookGroup.Url]">{{ bookGroup.Title }}</a></h3>
+                  <ul>
+                      <li *ngFor='let book of bookGroup.Books'><a [routerLink]="['/' + book.Url, 1]">{{book.Title}}</a></li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group btn-group" role="group">
+          <button id="chaptersDrop" type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            {{Chapter?.Title}}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="chaptersDrop">
+            <li *ngFor="let chapter of Book?.Chapters"><a class="dropdown-item" [routerLink]="['/' + chapter.Url]">{{chapter.Title}}</a></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-outline-dark" (click)="nextChapter()">Next</button>
+      </div>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-primary" (click)="copy()">Copy</button>
+        <button type="button" class="btn btn-primary" (click)="share()">Share</button>
+      </div>
+    </div>
   </div>
 </div>
