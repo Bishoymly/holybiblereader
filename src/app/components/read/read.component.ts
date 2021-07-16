@@ -28,10 +28,6 @@ export class ReadComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
-  }
-
-  ngAfterViewChecked(): void {
     this.route.url.subscribe( route => {
       var url = route;
       this.Bible.Loaded.subscribe( loaded => {
@@ -45,6 +41,9 @@ export class ReadComponent implements OnInit {
               if(this.route.snapshot.fragment){
                 this.setVerse(parseInt(this.route.snapshot.fragment));
               }
+              else{
+                this.setVerse(0);
+              }
             }
           })
         }
@@ -54,8 +53,11 @@ export class ReadComponent implements OnInit {
     this.route.fragment.subscribe(fragment =>{
       if(fragment){
         this.setVerse(parseInt(fragment));
-      }      
-    });
+      }
+      else{
+        this.setVerse(0);
+      }
+    });    
   }
 
   nextChapter(selectVerse = false){
@@ -68,6 +70,9 @@ export class ReadComponent implements OnInit {
         {
           this.Book = this.Bible.Version.Books[b];
           ch = 1;
+        }
+        else{
+          ch--;
         }
       }
 
@@ -96,6 +101,7 @@ export class ReadComponent implements OnInit {
       
       if(ch == 0){
         ch = 1;
+        selectVerse = false;
       }
       
       if(selectVerse){
@@ -116,16 +122,29 @@ export class ReadComponent implements OnInit {
     }
 
     this.VerseNumber = num;
+    if(this.VerseNumber == 0 || this.VerseNumber == 1){
+      this.viewportScroller.scrollToPosition([0,0]);
+    }
+
     this.Verse = this.Chapter?.Verses[this.VerseNumber - 1];
+
     if(this.Verse){
       this.Verse.IsSelected = true;
-      if(this.VerseNumber === 1){
-        this.viewportScroller.scrollToPosition([0,0]);
-      }
-      else{
-        this.viewportScroller.scrollToAnchor(this.VerseNumber.toString());
-      }      
+      setTimeout(()=>{
+        if(this.VerseNumber > 1){
+          this.viewportScroller.scrollToAnchor(this.VerseNumber.toString());
+        }
+      }, 1);
     }
+  }
+
+  verseClick(verse:Verse){
+    if(this.Verse){
+      verse.IsSelected = !verse.IsSelected;
+    }
+    else{
+      this.router.navigate([], { fragment: (verse.Number).toString() });
+    }    
   }
 
   @HostListener('window:keyup', ['$event'])
