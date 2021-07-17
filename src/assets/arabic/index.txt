@@ -1,0 +1,68 @@
+﻿العهد القديم
+genesis,ﺗﻜﻮﻳﻦ
+exodus,خروج
+leviticus,لاﻭﻳين
+numbers,عدد
+deuteronomy,تثنية
+joshua,ﻳﺸﻮﻉ
+judges,قضاة
+ruth,ﺭﺍﻋﻮﺙ
+1samuel,ﺻﻤﻮﺋﻴﻞ الأول
+2samuel,ﺻﻤﻮﺋﻴﻞ الثاني
+1kings,ملوك الأول
+2kings,ملوك الثاني
+1chronicles,ﺃﺧﺒﺎﺭ ﺍﻷﻳﺎﻡ ﺍﻷول
+2chronicles,ﺃﺧﺒﺎﺭ ﺍﻷﻳﺎﻡ ﺍﻟﺜﺎنى
+ezra,ﻋﺰﺭﺍ
+nehemiah,ﻧﺤﻤﻴﺎ
+esther,ﺃﺳﺘﻴﺮ
+job,ﺃﻳﻮﺏ
+psalm,مزامير
+proverbs,ﺃﻣﺜﺎﻝ
+ecclesiastes,جامعة
+songs,ﻧﺸﻴﺪ ﺍﻷﻧﺸﺎد 
+isaiah,ﺃﺷﻌﻴﺎء
+jeremiah,ﺃﺭﻣﻴﺎء
+lamentations,ﻣﺮﺍﺛﻲ ﺇﺭﻣﻴﺎء
+ezekiel,ﺣﺰﻗﻴﺎﻝ
+daniel,ﺩﺍﻧﻴﺎﻝ
+hosea,ﻫﻮﺷﻊ
+joel,ﻳﻮﺋﻴﻞ
+amos,ﻋﺎﻣﻮﺱ
+obadiah,ﻋﻮﺑﺪﻳﺎ
+jonah,ﻳﻮﻧﺎﻥ
+micah,ﻣﻴﺨﺎ
+nahum,ﻧﺎﺣﻮﻡ
+habakkuk,ﺣﺒﻘﻮﻕ
+zephaniah,ﺻﻔﻨﻴﺎ
+haggai,ﺣﺠﻲ
+zechariah,ﺯﻛﺮﻳﺎ
+malachi,ﻣﻼخى
+العهد الجديد
+matthew,متى
+mark,مرقس
+luke,لوقا
+john,يوحنا
+acts,اعمال الرسل
+romans,رومية
+1corinthians,كورنثوس الأولي
+2corinthians,كورنثوس الثانية
+galatians,غلاطية
+ephesians,افسس
+philippians,فيلبى
+colossians,كولوسى
+1thessalonians,تيسالونيكى الأولي
+2thessalonians,تسالونيكى الثانية
+1timothy,تيموثاوس الأولي
+2timothy,تيموثاوس الثانية
+titus,تيطس
+philemon,فليمون
+hebrews,عبرانيين
+james,يعقوب
+1peter,بطرس الأولي
+2peter,بطرس الثانية
+1john,يوحنا الأولي
+2john,يوحنا الثانية
+3john,يوحنا الثالثة
+jude,يهوذا
+revelation,رؤيا يوحنا اللاهوتي
