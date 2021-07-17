@@ -20,9 +20,15 @@ export class BibleService {
       private http:HttpClient
   ) {
     this.Version.Url = 'kjames';
+    this.Version.IsArabic = false;
     this.Version.BookGroups.push(new BookGroup(), new BookGroup());
     this.Version.BookGroups[0].Url = 'kjames/old';
     this.Version.BookGroups[1].Url = 'kjames/new';
+    /*this.Version.Url = 'arabic';
+    this.Version.IsArabic = true;
+    this.Version.BookGroups.push(new BookGroup(), new BookGroup());
+    this.Version.BookGroups[0].Url = 'arabic/old';
+    this.Version.BookGroups[1].Url = 'arabic/new';*/
     this.processBooks(this.Version, false);
   }
 
@@ -83,6 +89,7 @@ export class BibleService {
         console.log('/assets/'+book.Version.Url + '/' + book.UniqueId+'.txt');
         var chapter : Chapter | null = null;
         var str : string = '';
+        full = full.replace(/\r\n\r\n/g, '<break>');
         for (const line of full.split(/[\r\n]+/)){
           if (line.startsWith('==')){
             if (chapter!=null)
@@ -119,6 +126,7 @@ export class BibleService {
   private processContent(body : string, chapter : Chapter) : string {
 
     body = body.trim();
+    body = body.replace(/\r/g, '').replace(/\r/g, '').replace(/<break>/g, '\r\n');
     //body = body.replace((char)160, (char)32);
 
     //Index verses

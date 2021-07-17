@@ -1,4 +1,4 @@
-<div class="content">
+<div [ngClass]="{'arabic': this.Book?.Version?.IsArabic}" class="content">
   <div class="book">
     <div class="title-bar">
       <div class="btn-group" role="group">

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto&family=Cairo&family=Amiri&display=swap');
 
 body {
     min-height: 75rem;
@@ -9,6 +9,16 @@ body {
 .title-bar {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
+}
+
+.content{
+  font-size:1.4em;
+}
+
+.arabic, .arabic h1 {
+  direction: rtl;
+  font-family: 'Amiri';
+  font-size:1.8em;
 }
 
 h1, h2, h3, h4, h5, h6, .h {
@@ -58,14 +68,6 @@ ul {
 
 .search{
   width: 200px;
-}
-
-.content{
-  font-size:1.4em;
-}
-
-.arabic {
-    direction: rtl;
 }
 
 span{

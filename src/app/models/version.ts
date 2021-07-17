@@ -13,6 +13,7 @@ export class Version {
     public BookGroups: BookGroup[] = [];
     public OldTestamentBooks: Book[] = [];
     public NewTestamentBooks: Book[] = [];
+    public IsArabic: boolean = false;
 
     public ToString(): string {
         return this.Title;
