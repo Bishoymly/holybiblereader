@@ -16,7 +16,7 @@ export class ReadComponent implements OnInit {
 
   public Book : Book | undefined;
   public Chapter: Chapter | undefined;
-  public Verse: Verse | undefined;
+  //public Verse: Verse | undefined;
   public VerseNumber: number = -1;
 
   constructor(
@@ -39,10 +39,10 @@ export class ReadComponent implements OnInit {
             if(this.Chapter){
               this.titleService.setTitle(this.Chapter.ToString());
               if(this.route.snapshot.fragment){
-                this.setVerse(parseInt(this.route.snapshot.fragment));
+                this.setVerse(this.route.snapshot.fragment);
               }
               else{
-                this.setVerse(0);
+                this.setVerse('');
               }
             }
           })
@@ -52,10 +52,10 @@ export class ReadComponent implements OnInit {
 
     this.route.fragment.subscribe(fragment =>{
       if(fragment){
-        this.setVerse(parseInt(fragment));
+        this.setVerse(fragment);
       }
       else{
-        this.setVerse(0);
+        this.setVerse('');
       }
     });    
   }
@@ -115,76 +115,82 @@ export class ReadComponent implements OnInit {
     }
   }
 
-  setVerse(num : number){
+  setVerse(fragment : string){
 
-    if(this.Verse){
-      this.Verse.IsSelected = false;
-    }
-
-    this.VerseNumber = num;
-    if(this.VerseNumber == 0 || this.VerseNumber == 1){
-      this.viewportScroller.scrollToPosition([0,0]);
-    }
-
-    this.Verse = this.Chapter?.Verses[this.VerseNumber - 1];
-
-    if(this.Verse){
-      this.Verse.IsSelected = true;
-      setTimeout(()=>{
-        if(this.VerseNumber > 1){
-          this.viewportScroller.scrollToAnchor(this.VerseNumber.toString());
-        }
-      }, 1);
+    if(this.Chapter){
+      this.VerseNumber = this.Chapter.Select(fragment);
+      if(this.VerseNumber == 0 || this.VerseNumber == 1){
+        this.viewportScroller.scrollToPosition([0,0]);
+      }
+      else{
+        setTimeout(()=>this.viewportScroller.scrollToAnchor(this.VerseNumber.toString()), 1);
+      }
     }
   }
 
   verseClick(verse:Verse){
-    if(this.Verse){
-      verse.IsSelected = !verse.IsSelected;
-    }
-    else{
-      this.router.navigate([], { fragment: (verse.Number).toString() });
-    }    
+    verse.IsSelected = !verse.IsSelected;
+    this.router.navigate([], { fragment: this.Chapter?.SelectionToFragment() });
   }
 
   copy(){
-    navigator.clipboard.writeText(this.Chapter?.ToString() + ':'+this.Verse?.Number + ' ' + this.Verse?.OriginalText);
+    if(this.Chapter){
+      navigator.clipboard.writeText(this.Chapter.ToString() + ' : ' + this.Chapter.SelectedVerses.map(v=>v.Number + ' ' + v.OriginalText).join(''));
+    }
   }
 
   share(){
-    navigator.share({
-      title: this.Chapter?.ToString() + ':'+this.Verse?.Number,
-      text: this.Verse?.OriginalText,
-      url: window.location.toString()
-    });
+    if(this.Chapter){
+      navigator.share({
+        title: this.Chapter.ToString() + ':' + this.route.snapshot.fragment,
+        text: this.Chapter.ToString() + ' : ' + this.Chapter.SelectedVerses.map(v=>v.Number + ' ' + v.OriginalText).join(''),
+        url: window.location.toString()
+      });
+    }
   }
 
   @HostListener('window:keyup', ['$event'])
   keyUp(event: KeyboardEvent) {
-    switch(event.code){
-    case 'ArrowRight':
-      if(this.Chapter){
-        if(this.VerseNumber<this.Chapter.Verses.length){
-          this.router.navigate([], { fragment: (this.VerseNumber+1).toString(), replaceUrl: false });
-        }
-        else{
-          this.nextChapter(true);
-        }
-      }
-      break;
+    if(this.Chapter){
+      var selection = this.Chapter.SelectedVerses;
+      switch(event.code){
+        case 'ArrowRight':
+        
+          if(event.shiftKey && selection.length>0){
+            var lastSelected = selection[selection.length-1];
+            if(lastSelected.Number + 1 < this.Chapter.Verses.length){
+              this.Chapter.Verses[lastSelected.Number].IsSelected = true;
+              this.router.navigate([], { fragment: this.Chapter?.SelectionToFragment() });
+            }
+          }
+          else{
+            if(this.VerseNumber<this.Chapter.Verses.length){
+              this.router.navigate([], { fragment: (this.VerseNumber+1).toString(), replaceUrl: false });
+            }
+            else{
+              this.nextChapter(true);
+            }
+          }
+          break;
 
-    case 'ArrowLeft':
-      if(this.Chapter){
-        if(this.VerseNumber>1){
-          this.router.navigate([], { fragment: (this.VerseNumber-1).toString(), replaceUrl: false});
-        }
-        else{
-          this.previousChapter(true);
-        }
+        case 'ArrowLeft':
+          if(event.shiftKey && selection.length>1){
+            var lastSelected = selection[selection.length-1];
+            this.Chapter.Verses[lastSelected.Number-1].IsSelected = false;
+            this.router.navigate([], { fragment: this.Chapter?.SelectionToFragment() });
+          }
+          else{
+            if(this.VerseNumber > 1){
+              this.router.navigate([], { fragment: (this.VerseNumber-1).toString(), replaceUrl: false});
+            }
+            else{
+              this.previousChapter(true);
+            }
+          }
+          break;
+        default:
+          break;
       }
-      break;
-    default:
-      break;
     }
   }
 }

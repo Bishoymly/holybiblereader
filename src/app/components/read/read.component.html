@@ -40,7 +40,7 @@
       </span>
     </div>
 
-    <div class="title-bar">
+    <div class="title-bar" *ngIf="this.Chapter">
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-outline-dark" (click)="previousChapter()">Previous</button>
         <div class="btn-group btn-group" role="group">
@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11" *ngIf="this.VerseNumber>0">
       <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-primary" (click)="copy()">Copy</button>
         <button type="button" class="btn btn-primary" (click)="share()">Share</button>
