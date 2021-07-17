@@ -6,6 +6,7 @@ import { Book } from 'src/app/models/book';
 import { Chapter } from 'src/app/models/chapter';
 import { Verse } from 'src/app/models/verse';
 import { BibleService } from 'src/app/services/bible.service';
+import { __asyncDelegator } from 'tslib';
 
 @Component({
   selector: 'app-read',
@@ -136,6 +137,16 @@ export class ReadComponent implements OnInit {
   copy(){
     if(this.Chapter){
       navigator.clipboard.writeText(this.Chapter.ToString() + ' : ' + this.Chapter.SelectedVerses.map(v=>v.Number + ' ' + v.OriginalText).join(''));
+      var toast = document.getElementById('copied');
+      if(toast){
+        var oldClassName = toast.className;
+        toast.className +=' showing';
+        setTimeout(() => {
+          if(toast){
+            toast.className = oldClassName;
+          }
+        }, 3000);
+      }
     }
   }
 
@@ -186,6 +197,11 @@ export class ReadComponent implements OnInit {
             else{
               this.previousChapter(true);
             }
+          }
+          break;
+        case 'KeyC':
+          if(event.ctrlKey){
+            this.copy();
           }
           break;
         default:

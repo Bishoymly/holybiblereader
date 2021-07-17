@@ -70,6 +70,14 @@
       </div>
     </div>
 
+    <div id='copied' class="toast position-fixed align-items-center text-white bg-dark border-0 bottom-0 start-50 translate-middle-x m-3" style="z-index: 11" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Copied!
+        </div>
+      </div>
+    </div>
+
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11" *ngIf="this.VerseNumber>0">
       <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-primary" (click)="copy()">Copy</button>
