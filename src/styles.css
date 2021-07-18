@@ -18,7 +18,7 @@ body {
 .arabic, .arabic h1 {
   direction: rtl;
   font-family: 'Amiri';
-  font-size:1.8em;
+  font-size:1.4em;
 }
 
 h1, h2, h3, h4, h5, h6, .h {
@@ -41,7 +41,7 @@ h2 {
 h3 {
     font-size: 1.2em;
     line-height: 1;
-    margin-top: 1.5em;
+    margin-top: 1em;
     margin-bottom: 1em;
 }
 
@@ -75,7 +75,7 @@ span{
 }
 
 .selectedverse {
-    background-color: #eddd6e;
+  background-color: #eddd6e;
 }
 
 dfn{
@@ -91,6 +91,10 @@ dfn{
   padding: 0em 1em 2em 1em;
   font-size: 1em;
   min-width: 60vw;
+}
+
+.navbar-dark label {
+  color: #fff;
 }
 
 @media (min-width: 576px){
@@ -135,4 +139,23 @@ dfn{
     max-width: 50vw;
     padding: 3px;
   }
+}
+
+
+.dark{
+  color:#eee;
+  background-color: #000;
+}
+
+.dark .selectedverse{
+  background-color: #0096FF;
+}
+
+.dark .btn-outline-dark {
+  color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.dark a{
+  color: #1F51FF;
 }

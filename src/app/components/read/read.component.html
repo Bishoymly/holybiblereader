@@ -1,4 +1,4 @@
-<div [ngClass]="{'arabic': this.Book?.Version?.IsArabic}" class="content">
+<div class="content">
   <div class="book">
     <div class="title-bar">
       <div class="btn-group" role="group">
@@ -10,7 +10,7 @@
           <div class="dropdown-menu books-selector wcontainer shadow-lg p-3 mb-5 bg-body rounded" aria-labelledby="booksDrop">
             <div class="row">
               <div class="col-lg-6" *ngFor='let bookGroup of Bible.Version.BookGroups'>
-                  <h3><a [routerLink]="['/' + bookGroup.Url]">{{ bookGroup.Title }}</a></h3>
+                  <h3>{{ bookGroup.Title }}</h3>
                   <ul>
                       <li *ngFor='let book of bookGroup.Books'><a [routerLink]="['/' + book.Url, 1]">{{book.Title}}</a></li>
                   </ul>

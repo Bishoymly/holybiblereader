@@ -14,21 +14,26 @@ import { Version } from '../models/version';
 export class BibleService {
 
   public Version : Version = new Version();
+  public DarkMode:boolean = true;
+  public RTL:boolean = true;
+  public Tashkeel:boolean = false;
   public Loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
       private http:HttpClient
   ) {
-    this.Version.Url = 'kjames';
+    /*this.Version.Url = 'kjames';
     this.Version.IsArabic = false;
+    this.Version.Title = 'King James Bible';
     this.Version.BookGroups.push(new BookGroup(), new BookGroup());
     this.Version.BookGroups[0].Url = 'kjames/old';
-    this.Version.BookGroups[1].Url = 'kjames/new';
-    /*this.Version.Url = 'arabic';
+    this.Version.BookGroups[1].Url = 'kjames/new';*/
+    this.Version.Url = 'arabic';
+    this.Version.Title = 'الكتاب المقدس';
     this.Version.IsArabic = true;
     this.Version.BookGroups.push(new BookGroup(), new BookGroup());
     this.Version.BookGroups[0].Url = 'arabic/old';
-    this.Version.BookGroups[1].Url = 'arabic/new';*/
+    this.Version.BookGroups[1].Url = 'arabic/new';
     this.processBooks(this.Version, false);
   }
 
@@ -127,6 +132,10 @@ export class BibleService {
 
     body = body.trim();
     body = body.replace(/\r/g, '').replace(/\r/g, '').replace(/<break>/g, '\r\n');
+    if(!this.Tashkeel){
+      body = body.replace(/\p{M}/gu, '');
+    }
+    
     //body = body.replace((char)160, (char)32);
 
     //Index verses
