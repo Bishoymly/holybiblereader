@@ -63,6 +63,11 @@ a:hover {
     text-decoration: underline;
 }
 
+.navbar a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 ul {
     display: block;
     list-style-type: none;
