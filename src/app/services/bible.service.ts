@@ -115,7 +115,11 @@ export class BibleService {
         console.log('/assets/'+book.Version.Url + '/' + book.UniqueId+'.txt');
         var chapter : Chapter | null = null;
         var str : string = '';
-        full = full.replace(/\r\n\r\n/g, '<break>');
+        
+        if(book.Version.IsArabic){
+          full = full.replace(/\r\n\r\n/g, '<break>');
+        }
+        
         for (const line of full.split(/[\r\n]+/)){
           if (line.startsWith('==')){
             if (chapter!=null)
@@ -152,7 +156,12 @@ export class BibleService {
   private processContent(body : string, chapter : Chapter) : string {
 
     body = body.trim();
-    body = body.replace(/\r/g, '').replace(/\r/g, '').replace(/<break>/g, '\r\n');
+    
+    if(chapter.Book.Version.IsArabic){
+      body = body.replace(/\r/g, '').replace(/\r/g, '');
+      body = body.replace(/<break>/g, '\r\n\r\n');
+    }
+    
     if(!this.Tashkeel){
       body = body.replace(/\p{M}/gu, '');
     }
