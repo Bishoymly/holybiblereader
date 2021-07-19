@@ -15,9 +15,9 @@ export class BibleService {
 
   public Version : Version = new Version();
   public Versions : Version[] = [];
-  public DarkMode:boolean = true;
-  public RTL:boolean = true;
-  public Tashkeel:boolean = false;
+  public DarkMode:boolean = false;
+  public RTL:boolean = false;
+  public Tashkeel:boolean = true;
   public Loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
@@ -42,7 +42,7 @@ export class BibleService {
     v.BookGroups[1].Url = 'arabic/new';
     this.Versions.push(v);
 
-    this.Version = this.Versions[0];
+    this.Version = this.Versions[1];
     this.RTL = this.Version.IsArabic;
 
     this.processBooks(this.Version, false);
