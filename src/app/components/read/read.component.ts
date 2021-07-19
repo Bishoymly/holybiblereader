@@ -32,7 +32,11 @@ export class ReadComponent implements OnInit {
     this.route.url.subscribe( route => {
       var url = route;
       this.Bible.Loaded.subscribe( loaded => {
-        this.Book = this.Bible.Version.Books.find(b=>b.UniqueId == url[2].path);
+        let v = this.Bible.Versions.find(v=>v.UniqueId == url[0].path);
+        if(v){
+          this.Bible.SetVersion(v);
+        }
+        this.Book = this.Bible.Version.value.Books.find(b=>b.UniqueId == url[2].path);
         if(this.Book){
           this.Bible.ProcessChapters(this.Book);
           this.Book.IsLoaded.subscribe(loaded => {
@@ -65,11 +69,11 @@ export class ReadComponent implements OnInit {
     if(this.Book && this.Chapter){
       let ch = this.Chapter.Number + 1;
       if(ch > this.Book.Chapters.length){
-        let b = this.Bible.Version.Books.indexOf(this.Book);
+        let b = this.Bible.Version.value.Books.indexOf(this.Book);
         b++;
-        if(b<this.Bible.Version.Books.length)
+        if(b<this.Bible.Version.value.Books.length)
         {
-          this.Book = this.Bible.Version.Books[b];
+          this.Book = this.Bible.Version.value.Books[b];
           ch = 1;
         }
         else{
@@ -91,11 +95,11 @@ export class ReadComponent implements OnInit {
     if(this.Book && this.Chapter){
       let ch = this.Chapter.Number - 1;
       if(ch<1){
-        let b = this.Bible.Version.Books.indexOf(this.Book);
+        let b = this.Bible.Version.value.Books.indexOf(this.Book);
         b--;
         if(b>0)
         {
-          this.Book = this.Bible.Version.Books[b];
+          this.Book = this.Bible.Version.value.Books[b];
           ch = this.Book.Chapters.length;
         }
       }

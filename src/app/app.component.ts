@@ -21,7 +21,9 @@ export class AppComponent {
   }
 
   ngOnInit(){
-    this.prepareDoc();
+    this.Bible.Version.subscribe(version => {
+      this.prepareDoc();
+    });
   }
 
   prepareRoute(outlet: RouterOutlet) {

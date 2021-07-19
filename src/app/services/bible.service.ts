@@ -13,7 +13,7 @@ import { Version } from '../models/version';
 })
 export class BibleService {
 
-  public Version : Version = new Version();
+  public Version : BehaviorSubject<Version> = new BehaviorSubject<Version>(new Version());
   public Versions : Version[] = [];
   public DarkMode:boolean = false;
   public RTL:boolean = false;
@@ -25,6 +25,7 @@ export class BibleService {
   ) {
 
     let v = new Version();
+    v.UniqueId = 'kjames';
     v.Url = 'kjames';
     v.IsArabic = false;
     v.Title = 'King James Bible';
@@ -34,6 +35,7 @@ export class BibleService {
     this.Versions.push(v);
 
     v = new Version();
+    v.UniqueId = 'arabic';
     v.Url = 'arabic';
     v.IsArabic = true;
     v.Title = 'الكتاب المقدس';
@@ -42,10 +44,20 @@ export class BibleService {
     v.BookGroups[1].Url = 'arabic/new';
     this.Versions.push(v);
 
-    this.Version = this.Versions[1];
-    this.RTL = this.Version.IsArabic;
+    if(navigator.language.startsWith("ar")){
+      this.SetVersion(this.Versions[0]);
+    }
+    else{
+      this.SetVersion(this.Versions[1]);
+    }
+    
+    this.processBooks(this.Versions[0], false);
+    this.processBooks(this.Versions[1], false);
+  }
 
-    this.processBooks(this.Version, false);
+  public SetVersion(version: Version){
+    this.Version.next(version);
+    this.RTL = this.Version.value.IsArabic;
   }
 
   private processBooks(version : Version, loadData : boolean ){

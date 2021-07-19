@@ -17,8 +17,8 @@ body {
 
 .arabic, .arabic h1 {
   direction: rtl;
-  font-family: 'Amiri';
-  font-size:1.4em;
+  font-family: 'Amiri','Roboto', sans-serif;
+  font-size:1.3em;
 }
 
 h1, h2, h3, h4, h5, h6, .h {
