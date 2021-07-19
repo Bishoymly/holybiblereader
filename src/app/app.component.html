@@ -12,17 +12,31 @@
             <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2zm7.138 9.995c.193.301.402.583.63.846-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6.066 6.066 0 0 1-.415-.492 1.988 1.988 0 0 1-.94.31z"/>
           </svg>
         </a>
-        <ul class="dropdown-menu" aria-labelledby="versionsDropdown">
+        <ul class="dropdown-menu bg-dark navbar-dark" aria-labelledby="versionsDropdown">
           <li><a class="dropdown-item" [routerLink]="['/kjames']">King James</a></li>
           <li><a class="dropdown-item" [routerLink]="['/arabic']">الكتاب المقدس</a></li>
         </ul>
       </li>
-      <li class="nav-item">
-        <a class="nav-link">
+      <li class="nav-item dropdown">
+        <a class="nav-link" id="fontsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type" viewBox="0 0 16 16">
             <path d="m2.244 13.081.943-2.803H6.66l.944 2.803H8.86L5.54 3.75H4.322L1 13.081h1.244zm2.7-7.923L6.34 9.314H3.51l1.4-4.156h.034zm9.146 7.027h.035v.896h1.128V8.125c0-1.51-1.114-2.345-2.646-2.345-1.736 0-2.59.916-2.666 2.174h1.108c.068-.718.595-1.19 1.517-1.19.971 0 1.518.52 1.518 1.464v.731H12.19c-1.647.007-2.522.8-2.522 2.058 0 1.319.957 2.18 2.345 2.18 1.06 0 1.716-.43 2.078-1.011zm-1.763.035c-.752 0-1.456-.397-1.456-1.244 0-.65.424-1.115 1.408-1.115h1.805v.834c0 .896-.752 1.525-1.757 1.525z"/>
           </svg>
         </a>
+        <ul class="dropdown-menu bg-dark navbar-dark" aria-labelledby="fontsDropdown">
+          <li>
+            <ul class="list-group list-group-horizontal bg-dark navbar-dark">
+              <li><a class="nav-link center bigger">A</a></li>
+              <li><a class="nav-link center smaller">A</a></li>
+            </ul>
+          </li>
+          <li>
+            <ul class="list-group list-group-horizontal bg-dark navbar-dark">
+              <li><a class="nav-link center serif">Serif</a></li>
+              <li><a class="nav-link center sans">Sans</a></li>
+            </ul>
+          </li>
+        </ul>
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="switchDarkMode()" title="{{ 'DARK' | translate }}">
@@ -31,7 +45,7 @@
           </svg>
         </a>
       </li>
-      <li class="nav-item hide">
+      <li class="nav-item">
         <input id="q" name="q" class="form-control col-2 me-2 search" placeholder="Search" aria-label="Search" value='' />
       </li>
     </ul>
