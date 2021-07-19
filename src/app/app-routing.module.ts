@@ -4,7 +4,8 @@ import { HomeComponent } from './components/home/home.component';
 import { ReadComponent } from './components/read/read.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, data: {animation: 0}},
+  { path: '', component: HomeComponent},
+  { path: ':version', component: HomeComponent},
   { path: ':version/:group/:book/:chapter', component: ReadComponent },
   /*{ path: '**', component: ReadComponent, data: {animation: 2} },*/
 ];

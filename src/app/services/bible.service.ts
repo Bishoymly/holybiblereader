@@ -56,8 +56,8 @@ export class BibleService {
   }
 
   public SetVersion(version: Version){
+    this.RTL = version.IsArabic;
     this.Version.next(version);
-    this.RTL = this.Version.value.IsArabic;
   }
 
   private processBooks(version : Version, loadData : boolean ){

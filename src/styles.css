@@ -68,6 +68,19 @@ a:hover {
   cursor: pointer;
 }
 
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+  padding-right: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 ul {
     display: block;
     list-style-type: none;
