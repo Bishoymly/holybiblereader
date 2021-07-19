@@ -7,6 +7,7 @@ import { Chapter } from 'src/app/models/chapter';
 import { Verse } from 'src/app/models/verse';
 import { BibleService } from 'src/app/services/bible.service';
 import { __asyncDelegator } from 'tslib';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-read',

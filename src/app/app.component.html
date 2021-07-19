@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="['/']">
       <img src="/assets/icons/icon-24.png" alt="" height="24" class="d-inline-block align-text-top">
-      Holy Bible Reader
+      {{ 'TITLE' | translate }}
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
       <div class="d-flex">
         <div class="form-check form-switch m-2 col">
           <input class="form-check-input" type="checkbox" id="darkMode" [checked]="this.Bible.DarkMode" (change)="switchDarkMode()">
-          <label class="form-check-label" for="darkMode">Dark Mode</label>
+          <label class="form-check-label" for="darkMode">{{ 'DARK' | translate }}</label>
         </div>
         <input id="q" name="q" class="form-control col-2 me-2 search hide" placeholder="Search" aria-label="Search" value='' />
       </div>

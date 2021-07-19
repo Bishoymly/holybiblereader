@@ -2,7 +2,7 @@
   <div class="book">
     <div class="title-bar">
       <div class="btn-group" role="group">
-        <button type="button" class="btn btn-outline-dark" (click)="previousChapter()">Previous</button>
+        <button type="button" class="btn btn-outline-dark" (click)="previousChapter()">{{ 'PREVIOUS' | translate }}</button>
         <div class="btn-group btn-group" role="group">
           <button id="booksDrop" type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-custom-class="books" aria-expanded="false">
             {{Book?.Title}}
@@ -26,7 +26,7 @@
             <li *ngFor="let chapter of Book?.Chapters"><a class="dropdown-item" [routerLink]="['/' + chapter.Url]">{{chapter.Title}}</a></li>
           </ul>
         </div>
-        <button type="button" class="btn btn-outline-dark" (click)="nextChapter()">Next</button>
+        <button type="button" class="btn btn-outline-dark" (click)="nextChapter()">{{ 'NEXT' | translate }}</button>
       </div>
     </div>
 
@@ -42,7 +42,7 @@
 
     <div class="title-bar" *ngIf="this.Chapter">
       <div class="btn-group" role="group">
-        <button type="button" class="btn btn-outline-dark" (click)="previousChapter()">Previous</button>
+        <button type="button" class="btn btn-outline-dark" (click)="previousChapter()">{{ 'PREVIOUS' | translate }}</button>
         <div class="btn-group btn-group" role="group">
           <button id="booksDrop" type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-custom-class="books" aria-expanded="false">
             {{Book?.Title}}
@@ -66,22 +66,22 @@
             <li *ngFor="let chapter of Book?.Chapters"><a class="dropdown-item" [routerLink]="['/' + chapter.Url]">{{chapter.Title}}</a></li>
           </ul>
         </div>
-        <button type="button" class="btn btn-outline-dark" (click)="nextChapter()">Next</button>
+        <button type="button" class="btn btn-outline-dark" (click)="nextChapter()">{{ 'NEXT' | translate }}</button>
       </div>
     </div>
 
     <div id='copied' class="toast position-fixed align-items-center text-white bg-dark border-0 bottom-0 start-50 translate-middle-x m-3" style="z-index: 11" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="d-flex">
         <div class="toast-body">
-          Copied!
+          {{ 'COPIED' | translate }}
         </div>
       </div>
     </div>
 
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11" *ngIf="this.VerseNumber>0">
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-primary" (click)="copy()">Copy</button>
-        <button type="button" class="btn btn-primary" (click)="share()">Share</button>
+        <button type="button" class="btn btn-primary" (click)="copy()">{{ 'COPY' | translate }}</button>
+        <button type="button" class="btn btn-primary" (click)="share()">{{ 'SHARE' | translate }}</button>
       </div>
     </div>
   </div>

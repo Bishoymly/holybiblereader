@@ -11,6 +11,10 @@ body {
   margin-bottom: 1.5em;
 }
 
+.toast{
+  width: 200px;
+}
+
 .content{
   font-size:1.4em;
 }
@@ -157,5 +161,5 @@ dfn{
 }
 
 .dark a{
-  color: #1F51FF;
+  color: #0d6efd;
 }

@@ -8,6 +8,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './components/home/home.component';
 import { ReadComponent } from './components/read/read.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { ReadComponent } from './components/read/read.component';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    TranslateModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
