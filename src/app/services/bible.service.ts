@@ -14,6 +14,7 @@ import { Version } from '../models/version';
 export class BibleService {
 
   public Version : Version = new Version();
+  public Versions : Version[] = [];
   public DarkMode:boolean = true;
   public RTL:boolean = true;
   public Tashkeel:boolean = false;
@@ -22,18 +23,28 @@ export class BibleService {
   constructor(
       private http:HttpClient
   ) {
-    /*this.Version.Url = 'kjames';
-    this.Version.IsArabic = false;
-    this.Version.Title = 'King James Bible';
-    this.Version.BookGroups.push(new BookGroup(), new BookGroup());
-    this.Version.BookGroups[0].Url = 'kjames/old';
-    this.Version.BookGroups[1].Url = 'kjames/new';*/
-    this.Version.Url = 'arabic';
-    this.Version.Title = 'الكتاب المقدس';
-    this.Version.IsArabic = true;
-    this.Version.BookGroups.push(new BookGroup(), new BookGroup());
-    this.Version.BookGroups[0].Url = 'arabic/old';
-    this.Version.BookGroups[1].Url = 'arabic/new';
+
+    let v = new Version();
+    v.Url = 'kjames';
+    v.IsArabic = false;
+    v.Title = 'King James Bible';
+    v.BookGroups.push(new BookGroup(), new BookGroup());
+    v.BookGroups[0].Url = 'kjames/old';
+    v.BookGroups[1].Url = 'kjames/new';
+    this.Versions.push(v);
+
+    v = new Version();
+    v.Url = 'arabic';
+    v.IsArabic = true;
+    v.Title = 'الكتاب المقدس';
+    v.BookGroups.push(new BookGroup(), new BookGroup());
+    v.BookGroups[0].Url = 'arabic/old';
+    v.BookGroups[1].Url = 'arabic/new';
+    this.Versions.push(v);
+
+    this.Version = this.Versions[0];
+    this.RTL = this.Version.IsArabic;
+
     this.processBooks(this.Version, false);
   }
 
@@ -63,14 +74,12 @@ export class BibleService {
                     bookGroup.Books.push(book);
                 }
                 else{
-                    if (version.OldTestamentTitle === '')
+                    if (version.BookGroups[0].Title === '')
                     {
-                        version.OldTestamentTitle = line;
                         version.BookGroups[0].Title = line;
                     }
-                    else if (version.NewTestamentTitle === '')
+                    else if (version.BookGroups[1].Title === '')
                     {
-                        version.NewTestamentTitle = line;
                         version.BookGroups[1].Title = line;
                     }
                 }

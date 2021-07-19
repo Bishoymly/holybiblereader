@@ -6,13 +6,9 @@ export class Version {
     public Title: string = '';
     public Url: string = '';
     public UniqueId: string = '';
-    public OldTestamentTitle: string = '';
-    public NewTestamentTitle: string = '';
     public IsLoaded: boolean = false;
     public Books: Book[] = [];
     public BookGroups: BookGroup[] = [];
-    public OldTestamentBooks: Book[] = [];
-    public NewTestamentBooks: Book[] = [];
     public IsArabic: boolean = false;
 
     public ToString(): string {
