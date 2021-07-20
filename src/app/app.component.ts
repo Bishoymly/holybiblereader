@@ -37,9 +37,9 @@ export class AppComponent {
         TITLE: 'الكتاب المقدس',
         NEXT: 'التالي',
         PREVIOUS: 'السابق',
-        COPY: 'نقل',
+        COPY: 'نسخ',
         SHARE: 'نشر',
-        COPIED: 'تم النقل!',
+        COPIED: 'تم النسخ!',
         DARK: 'داكن'
       });
   }

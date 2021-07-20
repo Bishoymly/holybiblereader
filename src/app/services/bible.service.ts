@@ -17,7 +17,7 @@ export class BibleService {
   public Versions : Version[] = [];
   public DarkMode:boolean = false;
   public RTL:boolean = false;
-  public Tashkeel:boolean = true;
+  public Tashkeel:boolean = false;
   public Loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
