@@ -6,15 +6,15 @@ body {
     padding-bottom: 10em;
 }
 
-.serif{
-  font-family: 'Literata', serif;
+.serif {
+  font-family: 'Amiri','Literata', serif;
 }
 
 .sans{
   font-family: 'Roboto', sans-serif;
 }
 
-.btn{
+.btn, .navbar-brand{
   font-family: 'Roboto', sans-serif;
 }
 
@@ -29,48 +29,6 @@ body {
 
 .content{
   font-size:1.4em;
-}
-
-.arabic, .arabic h1 {
-  direction: rtl;
-  font-family: 'Amiri','Roboto', sans-serif;
-  font-size:1.3em;
-}
-
-.arabic .ms-auto {
-  margin-right: auto!important;
-  margin-left: initial!important;
-}
-
-.arabic .end-0 {
-  left: 0!important;
-  right: auto!important;
-}
-
-.arabic .btn-group>.btn-group:not(:last-child)>.btn, .arabic .btn-group>.btn:not(:last-child):not(.dropdown-toggle),.arabic .btn-group>.btn-group:not(:first-child)>.btn, .arabic .btn-group>.btn:nth-child(n+3), .arabic .btn-group>:not(.btn-check)+.btn {
-  border-radius: .25rem;
-}
-
-.arabic .btn-group>.btn-group:not(:last-child)>.btn, .arabic .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.arabic .btn-group>.btn-group:not(:first-child)>.btn, .arabic .btn-group>.btn:nth-child(n+3), .arabic .btn-group>:not(.btn-check)+.btn {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.arabic .btn-group>.btn-group:not(:first-child), .btn-group>.btn:not(:first-child) {
-  margin-right: -1px;
-  margin-left: 0;
-}
-
-.arabic .dropdown-menu[data-bs-popper] {
-  right: 0;
-  left: auto;
-  direction:rtl;
-  text-align: right;
 }
 
 h1, h2, h3, h4, h5, h6, .h {
@@ -191,6 +149,66 @@ dfn{
 .navbar-dark label {
   color: #fff;
 }
+
+/* ---------- Arabic ------------ */
+
+.arabic .navbar-brand{
+  font-family: 'Amiri','Roboto', sans-serif;
+}
+
+.arabic h1, .arabic h2, .arabic h3, .arabic h4, .arabic h5, .arabic h6, .h {
+  font-family: 'Amiri','Roboto', sans-serif;
+  font-weight: normal;
+  text-align: right;
+}
+
+.arabic, .arabic h1 {
+  direction: rtl;
+  font-family: 'Amiri','Roboto', sans-serif !important;
+  font-size:1.3em;
+}
+
+.arabic .ms-auto {
+  margin-right: auto!important;
+  margin-left: initial!important;
+}
+
+.arabic .end-0 {
+  left: 0!important;
+  right: auto!important;
+}
+
+.arabic .btn-group>.btn-group:not(:last-child)>.btn, .arabic .btn-group>.btn:not(:last-child):not(.dropdown-toggle),.arabic .btn-group>.btn-group:not(:first-child)>.btn, .arabic .btn-group>.btn:nth-child(n+3), .arabic .btn-group>:not(.btn-check)+.btn {
+  border-radius: .25rem;
+}
+
+.arabic .btn-group>.btn-group:not(:last-child)>.btn, .arabic .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.arabic .btn-group>.btn-group:not(:first-child)>.btn, .arabic .btn-group>.btn:nth-child(n+3), .arabic .btn-group>:not(.btn-check)+.btn {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.arabic .btn-group>.btn-group:not(:first-child), .btn-group>.btn:not(:first-child) {
+  margin-right: -1px;
+  margin-left: 0;
+}
+
+.arabic .dropdown-menu[data-bs-popper] {
+  right: 0;
+  left: auto;
+  direction:rtl;
+  text-align: right;
+}
+
+.arabic ul{
+  text-align: right;
+}
+
+/* ---------------------- */
 
 @media (min-width: 576px){
   .wcontainer {

@@ -24,7 +24,7 @@ export class Verse {
   public Url:string = '';
   public IsSelected: boolean = false;
   public get IsEndOfParagraph(): boolean {
-    return this.Text.indexOf('\n')>-1;
+    return this.Text.indexOf('\r')>-1;
   }
 
   public Copy(): Verse {
