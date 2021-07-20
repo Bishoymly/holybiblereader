@@ -6,6 +6,10 @@ body {
     padding-bottom: 10em;
 }
 
+.serif{
+  font-family: 'Literata', serif;
+}
+
 .sans{
   font-family: 'Roboto', sans-serif;
 }
