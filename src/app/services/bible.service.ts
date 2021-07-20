@@ -18,6 +18,7 @@ export class BibleService {
   public DarkMode:boolean = false;
   public RTL:boolean = false;
   public Tashkeel:boolean = false;
+  public Serif:boolean = true;
   public Loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(

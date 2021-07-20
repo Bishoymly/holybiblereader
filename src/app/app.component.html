@@ -32,8 +32,8 @@
           </li>
           <li>
             <ul class="list-group list-group-horizontal bg-dark navbar-dark">
-              <li><a class="nav-link center serif">Serif</a></li>
-              <li><a class="nav-link center sans">Sans</a></li>
+              <li><a class="nav-link center serif" (click)="serif()">Serif</a></li>
+              <li><a class="nav-link center sans" (click)="sans()">Sans</a></li>
             </ul>
           </li>
         </ul>
@@ -46,7 +46,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <input id="q" name="q" class="form-control col-2 me-2 search" placeholder="Search" aria-label="Search" value='' />
+        <input id="q" name="q" class="form-control col-2 me-2 search" placeholder="{{ 'SEARCH' | translate }}" aria-label="Search" value='' />
       </li>
     </ul>
   </div>

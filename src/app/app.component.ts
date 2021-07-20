@@ -30,7 +30,8 @@ export class AppComponent {
         COPY: 'Copy',
         SHARE: 'Share',
         COPIED: 'Copied!',
-        DARK: 'Dark Mode'
+        DARK: 'Dark Mode',
+        SEARCH: 'Search',
       });
 
       translate.setTranslation('ar', {
@@ -40,7 +41,8 @@ export class AppComponent {
         COPY: 'نسخ',
         SHARE: 'نشر',
         COPIED: 'تم النسخ!',
-        DARK: 'داكن'
+        DARK: 'داكن',
+        SEARCH: 'بحث',
       });
   }
 
@@ -61,6 +63,13 @@ export class AppComponent {
     else{
       document.body.classList.remove('dark');
     }
+
+    if(this.Bible.Serif){
+      document.body.classList.remove('sans');
+    }
+    else{
+      document.body.classList.add('sans');
+    }
     
     if(this.Bible.RTL){
       document.body.dir = "rtl";
@@ -78,6 +87,16 @@ export class AppComponent {
 
   switchDarkMode(){
     this.Bible.DarkMode = !this.Bible.DarkMode;
+    this.prepareDoc();
+  }
+
+  serif(){
+    this.Bible.Serif = true;
+    this.prepareDoc();
+  }
+
+  sans(){
+    this.Bible.Serif = false;
     this.prepareDoc();
   }
 }

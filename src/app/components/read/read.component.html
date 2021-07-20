@@ -35,7 +35,6 @@
     <div class="justify">
       <span *ngFor="let verse of Chapter?.Verses">
         <span id="{{verse.Number}}" [ngClass]="{'selectedverse':verse.IsSelected}" [innerHTML]="verse.Text" (click)="verseClick(verse)"></span>
-        <span *ngIf="verse.IsEndOfParagraph">End</span>
         <br *ngIf="verse.IsEndOfParagraph" />
         <br *ngIf="verse.IsEndOfParagraph" />
       </span>

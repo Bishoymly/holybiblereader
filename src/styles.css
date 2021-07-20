@@ -2,8 +2,12 @@
 
 body {
     min-height: 75rem;
-    font-family: 'Literata', 'Roboto', sans-serif;
+    font-family: 'Literata', serif;
     padding-bottom: 10em;
+}
+
+.sans{
+  font-family: 'Roboto', sans-serif;
 }
 
 .title-bar {
@@ -112,7 +116,7 @@ a:hover {
   list-style: none;
 }
 
-.navbar-expand-lg .navbar-nav .nav-link {
+.navbar-expand .navbar-nav .nav-link {
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -134,14 +138,6 @@ a:hover {
   margin-top: 0.4em;
 }
 
-.serif{
-  font-family: 'Merriweather', serif;
-}
-
-.sans{
-  font-family: 'Roboto', sans-serif;
-}
-
 .center{
   width: 80px;
   text-align: center;
@@ -155,12 +151,11 @@ ul {
 }
 
 .search{
-  width: 200px;
+  width: 150px;
   background-color: #444;
   border: 1px solid #888;
   margin-top: 4px;
 }
-
 
 span{
   transition: background-color 0.3s ease;
