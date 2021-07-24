@@ -169,8 +169,8 @@ export class ReadComponent implements OnInit {
   keyUp(event: KeyboardEvent) {
     if(this.Chapter){
       var selection = this.Chapter.SelectedVerses;
-      if((event.code === 'ArrowRight' && !this.Bible.RTL)
-        || (event.code === 'ArrowLeft' && this.Bible.RTL)){
+      if((event.code === 'ArrowRight' && !this.Bible.Settings.RTL)
+        || (event.code === 'ArrowLeft' && this.Bible.Settings.RTL)){
           if(event.shiftKey && selection.length>0){
             var lastSelected = selection[selection.length-1];
             if(lastSelected.Number + 1 < this.Chapter.Verses.length){
@@ -188,8 +188,8 @@ export class ReadComponent implements OnInit {
           }
         }
 
-      if((event.code === 'ArrowLeft' && !this.Bible.RTL)
-        || (event.code === 'ArrowRight' && this.Bible.RTL)){
+      if((event.code === 'ArrowLeft' && !this.Bible.Settings.RTL)
+        || (event.code === 'ArrowRight' && this.Bible.Settings.RTL)){
           if(event.shiftKey && selection.length>1){
             var lastSelected = selection[selection.length-1];
             this.Chapter.Verses[lastSelected.Number-1].IsSelected = false;

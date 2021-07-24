@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Book } from '../models/book';
 import { BookGroup } from '../models/book-group';
 import { Chapter } from '../models/chapter';
+import { Settings } from '../models/settings';
 import { Verse } from '../models/verse';
 import { Version } from '../models/version';
 
@@ -13,12 +14,9 @@ import { Version } from '../models/version';
 })
 export class BibleService {
 
-  public Version : BehaviorSubject<Version> = new BehaviorSubject<Version>(new Version());
+  public Version = new BehaviorSubject<Version>(new Version());
   public Versions : Version[] = [];
-  public DarkMode:boolean = false;
-  public RTL:boolean = false;
-  public Tashkeel:boolean = false;
-  public Serif:boolean = true;
+  public Settings = new Settings();
   public Loaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
@@ -45,20 +43,25 @@ export class BibleService {
     v.BookGroups[1].Url = 'arabic/new';
     this.Versions.push(v);
 
-    if(navigator.language.startsWith("ar")){
-      this.SetVersion(this.Versions[0]);
-    }
-    else{
-      this.SetVersion(this.Versions[1]);
-    }
-    
+    this.Load();
+
     this.processBooks(this.Versions[0], false);
     this.processBooks(this.Versions[1], false);
+
+    if(navigator.language.startsWith("ar")){
+      this.SetVersion(this.Versions[1]);
+    }
+    else{
+      this.SetVersion(this.Versions[0]);
+    }    
   }
 
   public SetVersion(version: Version){
-    this.RTL = version.IsArabic;
-    this.Version.next(version);
+    if(this.Version.value !== version){
+      this.Settings.RTL = version.IsArabic;
+      console.log('changing version to: ' + version.Title);
+      this.Version.next(version);
+    }    
   }
 
   private processBooks(version : Version, loadData : boolean ){
@@ -121,6 +124,8 @@ export class BibleService {
           full = full.replace(/\r\n\r\n/g, '<break>');
         }
         
+        book.Chapters = [];
+
         for (const line of full.split(/[\r\n]+/)){
           if (line.startsWith('==')){
             if (chapter!=null)
@@ -163,7 +168,7 @@ export class BibleService {
       body = body.replace(/<break>/g, '\r\n\r\n');
     }
     
-    if(!this.Tashkeel){
+    if(!this.Settings.Tashkeel){
       body = body.replace(/\p{M}/gu, '');
     }
     
@@ -235,5 +240,14 @@ export class BibleService {
       }
 
       return builder;
+  }
+
+  public Save() {
+    const jsonData = JSON.stringify(this.Settings);
+    localStorage.setItem('settings', jsonData);
+  }
+  
+  Load() {
+    this.Settings = JSON.parse(localStorage.getItem('settings')??'{}');
   }
 }

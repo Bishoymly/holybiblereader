@@ -13,8 +13,8 @@
           </svg>
         </a>
         <ul class="dropdown-menu bg-dark navbar-dark" aria-labelledby="versionsDropdown">
-          <li><a class="dropdown-item" [routerLink]="['/kjames']">King James</a></li>
-          <li><a class="dropdown-item" [routerLink]="['/arabic']">الكتاب المقدس</a></li>
+          <li><a class="dropdown-item" href="/kjames">King James</a></li>
+          <li><a class="dropdown-item" href="/arabic">الكتاب المقدس</a></li>
         </ul>
       </li>
       <li class="nav-item dropdown">
@@ -26,14 +26,20 @@
         <ul class="dropdown-menu bg-dark navbar-dark" aria-labelledby="fontsDropdown">
           <li>
             <ul class="list-group list-group-horizontal bg-dark navbar-dark">
-              <li><a class="nav-link center bigger">A</a></li>
-              <li><a class="nav-link center smaller">A</a></li>
+              <li><a class="nav-link center bigger" (click)="increaseFont()">A</a></li>
+              <li><a class="nav-link center smaller" (click)="decreaseFont()">A</a></li>
             </ul>
           </li>
-          <li>
+          <li *ngIf="!this.Bible.Settings.RTL">
             <ul class="list-group list-group-horizontal bg-dark navbar-dark">
               <li><a class="nav-link center serif" (click)="serif()">Serif</a></li>
               <li><a class="nav-link center sans" (click)="sans()">Sans</a></li>
+            </ul>
+          </li>
+          <li *ngIf="this.Bible.Settings.RTL">
+            <ul class="list-group list-group-horizontal bg-dark navbar-dark">
+              <li><a class="nav-link center" (click)="tashkeel()">بِالتَّشْكِيلِ</a></li>
+              <li><a class="nav-link center" (click)="removeTashkeel()">بدون</a></li>
             </ul>
           </li>
         </ul>

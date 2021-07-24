@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideInAnimation } from './animations';
 import { BibleService } from './services/bible.service';
@@ -57,21 +57,27 @@ export class AppComponent {
   }
 
   prepareDoc(){
-    if(this.Bible.DarkMode){
+    if(this.Bible.Settings.DarkMode){
       document.body.classList.add('dark');
     }
     else{
       document.body.classList.remove('dark');
     }
 
-    if(this.Bible.Serif){
+    if(this.Bible.Settings.Serif){
       document.body.classList.remove('sans');
     }
     else{
       document.body.classList.add('sans');
     }
-    
-    if(this.Bible.RTL){
+
+    document.body.classList.remove('big');
+    document.body.classList.remove('small');
+    if(this.Bible.Settings.FontSize!=''){
+      document.body.classList.add(this.Bible.Settings.FontSize);
+    }
+        
+    if(this.Bible.Settings.RTL){
       document.body.dir = "rtl";
       document.body.lang = "ar";
       document.body.classList.add('arabic');
@@ -86,17 +92,58 @@ export class AppComponent {
   }
 
   switchDarkMode(){
-    this.Bible.DarkMode = !this.Bible.DarkMode;
+    this.Bible.Settings.DarkMode = !this.Bible.Settings.DarkMode;
+    this.Bible.Save();
     this.prepareDoc();
   }
 
   serif(){
-    this.Bible.Serif = true;
+    this.Bible.Settings.Serif = true;
+    this.Bible.Save();
     this.prepareDoc();
   }
 
   sans(){
-    this.Bible.Serif = false;
+    this.Bible.Settings.Serif = false;
+    this.Bible.Save();
     this.prepareDoc();
+  }
+
+  tashkeel(){
+    this.Bible.Settings.Tashkeel = true;
+    this.Bible.Save();
+    this.reload();
+  }
+
+  removeTashkeel(){
+    this.Bible.Settings.Tashkeel = false;
+    this.Bible.Save();
+    this.reload();
+  }
+
+  increaseFont(){
+    if(this.Bible.Settings.FontSize === ''){
+      this.Bible.Settings.FontSize = 'big';
+    }
+    else{
+      this.Bible.Settings.FontSize = '';
+    }
+    this.Bible.Save();
+    this.prepareDoc();
+  }
+
+  decreaseFont(){
+    if(this.Bible.Settings.FontSize === ''){
+      this.Bible.Settings.FontSize = 'small';
+    }
+    else{
+      this.Bible.Settings.FontSize = '';
+    }
+    this.Bible.Save();
+    this.prepareDoc();
+  }
+
+  reload(){
+    location.reload();
   }
 }

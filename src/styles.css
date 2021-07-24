@@ -28,7 +28,15 @@ body {
 }
 
 .content{
+  font-size:1.2em;
+}
+
+.big .content{
   font-size:1.4em;
+}
+
+.small .content{
+  font-size:1em;
 }
 
 h1, h2, h3, h4, h5, h6, .h {
@@ -150,6 +158,27 @@ dfn{
   color: #fff;
 }
 
+.chapters {
+  /*width: 100vw;*/
+}
+
+.chapters ul {
+  flex-wrap: wrap;
+  padding: 1em;
+}
+
+.chapters .list-group-item {
+  width: 55px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.chapters .list-group-item:hover {
+  text-decoration: none;
+  background-color: #444;
+  color:#eee;
+}
+
 /* ---------- Arabic ------------ */
 
 .arabic .navbar-brand{
@@ -165,7 +194,15 @@ dfn{
 .arabic, .arabic h1 {
   direction: rtl;
   font-family: 'Amiri','Roboto', sans-serif !important;
-  font-size:1.3em;
+  font-size:1.2em;
+}
+
+.arabic.big{
+  font-size:1.4em;
+}
+
+.arabic.small{
+  font-size:1em;
 }
 
 .arabic .ms-auto {
@@ -250,6 +287,7 @@ dfn{
     width: max-content;
     max-width: 50vw;
     padding: 3px;
+    z-index: 1000;
   }
 }
 

@@ -18,9 +18,11 @@ export class HomeComponent implements OnInit {
     this.route.url.subscribe( route => {
       var url = route;
       this.Bible.Loaded.subscribe( loaded => {
-        let v = this.Bible.Versions.find(v=>v.UniqueId == url[0].path);
-        if(v){
-          this.Bible.SetVersion(v);
+        if(url.length>0){
+          let v = this.Bible.Versions.find(v=>v.UniqueId == url[0].path);
+          if(v){
+            this.Bible.SetVersion(v);
+          }
         }
       });
     });
