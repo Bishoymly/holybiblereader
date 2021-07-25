@@ -6,6 +6,13 @@ body {
     padding-bottom: 10em;
 }
 
+.scrolled-down nav{
+  transform:translateY(-100%); transition: all 0.3s ease-in-out;
+}
+.scrolled-up nav{
+  transform:translateY(0); transition: all 0.3s ease-in-out;
+}
+
 .serif {
   font-family: 'Amiri','Literata', serif;
 }

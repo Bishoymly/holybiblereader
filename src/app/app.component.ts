@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideInAnimation } from './animations';
@@ -14,6 +14,7 @@ import { BibleService } from './services/bible.service';
 })
 export class AppComponent {
   title = 'Holy Bible Reader';
+  lastScrollTop = 0;
 
   constructor(
     public Bible:BibleService,
@@ -145,5 +146,19 @@ export class AppComponent {
 
   reload(){
     location.reload();
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  scroll(){
+    let scrollTop = window.scrollY;
+    if(scrollTop < this.lastScrollTop) {
+      document.body.classList.remove('scrolled-down');
+      document.body.classList.add('scrolled-up');
+    }
+    else {
+      document.body.classList.remove('scrolled-up');
+      document.body.classList.add('scrolled-down');
+    }
+    this.lastScrollTop = scrollTop;
   }
 }
