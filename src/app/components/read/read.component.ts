@@ -1,13 +1,12 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRoute, ParamMap, UrlSegment } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Book } from 'src/app/models/book';
 import { Chapter } from 'src/app/models/chapter';
 import { Verse } from 'src/app/models/verse';
 import { BibleService } from 'src/app/services/bible.service';
 import { __asyncDelegator } from 'tslib';
-import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-read',
@@ -20,6 +19,15 @@ export class ReadComponent implements OnInit {
   public Chapter: Chapter | undefined;
   public ShowChapters = true;
   public VerseNumber: number = -1;
+  private _ScrollToVerse = true;
+  public get ScrollToVerse() {
+    return this._ScrollToVerse;
+  }
+  public set ScrollToVerse(value) {
+    console.log('scroll='+this._ScrollToVerse+' > '+value);
+    this._ScrollToVerse = value;
+  }
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +45,12 @@ export class ReadComponent implements OnInit {
         if(v){
           this.Bible.SetVersion(v);
         }
-        this.Book = this.Bible.Version.value.Books.find(b=>b.UniqueId == url[2].path);
+        let b = this.Bible.Version.value.Books.find(b=>b.UniqueId == url[2].path);
+        if(this.Book!=b){
+          this.ScrollToVerse = true;
+          this.Book = b;
+        }
+        
         if(this.Book){
           this.Bible.ProcessChapters(this.Book);
           this.Book.IsLoaded.subscribe(loaded => {
@@ -70,6 +83,7 @@ export class ReadComponent implements OnInit {
   }
 
   nextChapter(selectVerse = false){
+    this.ScrollToVerse = true;
     if(this.Book && this.Chapter){
       let ch = this.Chapter.Number + 1;
       if(ch > this.Book.Chapters.length){
@@ -96,6 +110,7 @@ export class ReadComponent implements OnInit {
   }
 
   previousChapter(selectVerse = false){
+    this.ScrollToVerse = true;
     if(this.Book && this.Chapter){
       let ch = this.Chapter.Number - 1;
       if(ch<1){
@@ -128,17 +143,20 @@ export class ReadComponent implements OnInit {
 
     if(this.Chapter){
       this.VerseNumber = this.Chapter.Select(fragment);
-      if(this.VerseNumber == 0 || this.VerseNumber == 1){
-        this.viewportScroller.scrollToPosition([0,0]);
-      }
-      else{
-        setTimeout(()=>this.viewportScroller.scrollToAnchor(this.VerseNumber.toString()), 1);
-      }
+      if(this.ScrollToVerse){
+        if(this.VerseNumber == 0 || this.VerseNumber == 1){
+          this.viewportScroller.scrollToPosition([0,0]);
+        }
+        else{
+          setTimeout(()=>this.viewportScroller.scrollToAnchor(this.VerseNumber.toString()), 1);
+        }
+      }      
     }
   }
 
   verseClick(verse:Verse){
     verse.IsSelected = !verse.IsSelected;
+    this.ScrollToVerse = false;
     this.router.navigate([], { fragment: this.Chapter?.SelectionToFragment() });
   }
 
@@ -175,6 +193,7 @@ export class ReadComponent implements OnInit {
   @HostListener('window:keyup', ['$event'])
   keyUp(event: KeyboardEvent) {
     if(this.Chapter){
+      this.ScrollToVerse = true;
       var selection = this.Chapter.SelectedVerses;
       if((event.code === 'ArrowRight' && !this.Bible.Settings.RTL)
         || (event.code === 'ArrowLeft' && this.Bible.Settings.RTL)){
