@@ -9,18 +9,17 @@
           </button>          
         </div>
         <div class="btn-group btn-group" role="group">
-          <button id="chaptersDrop" type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <button type="button" class="btn btn-outline-dark dropdown-toggle" (click)="toggleChapters()">
             {{Chapter?.Title}}
           </button>
-          <ul class="dropdown-menu chapters sans wcontainer" aria-labelledby="chaptersDrop">
-            <ul class="list-group list-group-horizontal">
-              <li *ngFor="let chapter of Book?.Chapters"><a class="list-group-item" [routerLink]="['/' + chapter.Url]">{{chapter.Title}}</a></li>
-            </ul>
-          </ul>
         </div>
         <button type="button" class="btn btn-outline-dark" (click)="nextChapter()">{{ 'NEXT' | translate }}</button>
       </div>
     </div>
+
+    <ul *ngIf="ShowChapters" class="chapters sans list-group list-group-horizontal" (click)="toggleChapters()">
+      <li *ngFor="let chapter of Book?.Chapters"><a class="list-group-item" [routerLink]="['/' + chapter.Url]">{{chapter.Title}}</a></li>
+    </ul>
 
     <h1>{{this.Chapter?.ToString()}}</h1>
 

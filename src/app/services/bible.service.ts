@@ -48,20 +48,27 @@ export class BibleService {
     this.processBooks(this.Versions[0], false);
     this.processBooks(this.Versions[1], false);
 
-    if(navigator.language.startsWith("ar")){
-      this.SetVersion(this.Versions[1]);
+    let current = this.Versions.find(v=>v.UniqueId == this.Settings.Version);
+    if(current){
+      this.SetVersion(current);
     }
     else{
-      this.SetVersion(this.Versions[0]);
-    }    
+      if(navigator.language.startsWith("ar")){
+        this.SetVersion(this.Versions[1]);
+      }
+      else{
+        this.SetVersion(this.Versions[0]);
+      }
+    }
   }
 
   public SetVersion(version: Version){
     if(this.Version.value !== version){
+      this.Settings.Version = version.UniqueId;
       this.Settings.RTL = version.IsArabic;
-      console.log('changing version to: ' + version.Title);
+      this.Save();
       this.Version.next(version);
-    }    
+    }
   }
 
   private processBooks(version : Version, loadData : boolean ){

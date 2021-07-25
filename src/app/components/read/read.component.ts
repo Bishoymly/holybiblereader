@@ -18,7 +18,7 @@ export class ReadComponent implements OnInit {
 
   public Book : Book | undefined;
   public Chapter: Chapter | undefined;
-  //public Verse: Verse | undefined;
+  public ShowChapters = true;
   public VerseNumber: number = -1;
 
   constructor(
@@ -49,6 +49,9 @@ export class ReadComponent implements OnInit {
               }
               else{
                 this.setVerse('');
+                if(this.Chapter.Number!=1){
+                  this.ShowChapters = false;
+                }                
               }
             }
           })
@@ -163,6 +166,10 @@ export class ReadComponent implements OnInit {
         url: window.location.toString()
       });
     }
+  }
+
+  toggleChapters(){
+    this.ShowChapters = !this.ShowChapters;
   }
 
   @HostListener('window:keyup', ['$event'])

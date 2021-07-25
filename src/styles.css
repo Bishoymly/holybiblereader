@@ -33,10 +33,12 @@ body {
 
 .big .content{
   font-size:1.4em;
+  line-height: 1.7em;
 }
 
 .small .content{
   font-size:1em;
+  line-height: 1.8em;
 }
 
 h1, h2, h3, h4, h5, h6, .h {
@@ -159,18 +161,18 @@ dfn{
 }
 
 .chapters {
-  /*width: 100vw;*/
-}
-
-.chapters ul {
   flex-wrap: wrap;
-  padding: 1em;
+  padding-bottom: 1em;
 }
 
 .chapters .list-group-item {
   width: 55px;
   text-align: center;
   text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.5em;
+  border: 1px solid rgba(128,128,128,.5);
+  background-color: inherit;
 }
 
 .chapters .list-group-item:hover {
@@ -191,17 +193,18 @@ dfn{
   text-align: right;
 }
 
-.arabic, .arabic h1 {
+.arabic .content, .arabic h1 {
   direction: rtl;
   font-family: 'Amiri','Roboto', sans-serif !important;
   font-size:1.2em;
+  line-height: 2.1em;
 }
 
-.arabic.big{
+.arabic.big .content{
   font-size:1.4em;
 }
 
-.arabic.small{
+.arabic.small .content{
   font-size:1em;
 }
 
@@ -293,8 +296,8 @@ dfn{
 
 
 .dark{
-  color:#eee;
-  background-color: #000;
+  color:#ddd;
+  background-color: #111;
 }
 
 .dark .selectedverse{

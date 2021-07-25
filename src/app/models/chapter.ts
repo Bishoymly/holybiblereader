@@ -20,19 +20,6 @@ export class Chapter {
       this._content = value;
   }
 
-  /*private RemoveTashkeel(body: string): string {
-      for (let i: number = 0; (i < body.Length); i++) {
-          if ((((<number>(body[i])) >= 1611)
-                      && ((<number>(body[i])) <= 1631))) {
-              body = body.Remove(i, 1);
-              i--;
-          }
-
-      }
-
-      return body;
-  }*/
-
   public get Lines(): string[] {
     return this.Content?.split(/[\r\n]+/);
   }
