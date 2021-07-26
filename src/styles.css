@@ -183,6 +183,15 @@ dfn{
   color:#eee;
 }
 
+/* ---------- Search ------------ */
+.results{
+  margin: 2em 0;
+}
+
+.results li{
+  padding-bottom: 1.5em;
+}
+
 /* ---------- Arabic ------------ */
 
 .arabic .navbar-brand{

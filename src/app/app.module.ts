@@ -9,13 +9,15 @@ import { environment } from '../environments/environment';
 import { HomeComponent } from './components/home/home.component';
 import { ReadComponent } from './components/read/read.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { SearchComponent } from './components/search/search.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ReadComponent
+    ReadComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
