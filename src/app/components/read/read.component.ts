@@ -19,15 +19,7 @@ export class ReadComponent implements OnInit {
   public Chapter: Chapter | undefined;
   public ShowChapters = true;
   public VerseNumber: number = -1;
-  private _ScrollToVerse = true;
-  public get ScrollToVerse() {
-    return this._ScrollToVerse;
-  }
-  public set ScrollToVerse(value) {
-    console.log('scroll='+this._ScrollToVerse+' > '+value);
-    this._ScrollToVerse = value;
-  }
-  
+  public ScrollToVerse = true;
 
   constructor(
     private route: ActivatedRoute,
