@@ -13,8 +13,8 @@
           </svg>
         </a>
         <ul class="dropdown-menu bg-dark navbar-dark" aria-labelledby="versionsDropdown">
-          <li><a class="dropdown-item" href="/kjames">King James</a></li>
-          <li><a class="dropdown-item" href="/arabic">الكتاب المقدس</a></li>
+          <li><a class="dropdown-item" href="/kjames" (click)="switchToVersion($event, 'kjames')">King James</a></li>
+          <li><a class="dropdown-item" href="/arabic" (click)="switchToVersion($event, 'arabic')">الكتاب المقدس</a></li>
         </ul>
       </li>
       <li class="nav-item dropdown">

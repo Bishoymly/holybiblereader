@@ -19,6 +19,7 @@ export class AppComponent {
   constructor(
     public Bible:BibleService,
     public route: ActivatedRoute,
+    private router: Router,
     private translate: TranslateService
   ) {
     
@@ -146,6 +147,21 @@ export class AppComponent {
 
   reload(){
     location.reload();
+  }
+
+  switchToVersion(event:Event, name:string){
+    
+    let url = window.location.pathname.split('/');
+    let fragment = window.location.hash.split('#');
+    if(url.length>3){
+      if(fragment && fragment.length>1){
+        this.router.navigate([name, url[2], url[3], url[4]], { fragment: fragment[1] });
+      }
+      else{
+        this.router.navigate([name, url[2], url[3], url[4]]);
+      }
+      event.preventDefault();
+    }
   }
 
   @HostListener('window:scroll', ['$event'])
