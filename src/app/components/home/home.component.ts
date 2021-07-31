@@ -17,14 +17,12 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.route.url.subscribe( route => {
       var url = route;
-      this.Bible.Loaded.subscribe( loaded => {
         if(url.length>0){
           let v = this.Bible.Versions.find(v=>v.UniqueId == url[0].path);
           if(v){
             this.Bible.SetVersion(v);
           }
         }
-      });
     });
   }
 }

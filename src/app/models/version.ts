@@ -10,6 +10,8 @@ export class Version {
     public Books: Book[] = [];
     public BookGroups: BookGroup[] = [];
     public IsArabic: boolean = false;
+    public Loaded = 0;
+    public Total = 66;
 
     public ToString(): string {
         return this.Title;

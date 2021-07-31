@@ -1,6 +1,7 @@
 export class Verse {
 
   public Number: number = 0;
+  public Title: string = '';
   public OriginalText: string = '';
   private _Text: string = '';
   public get Text(): string {
@@ -20,6 +21,18 @@ export class Verse {
       }
     }
   }
+
+  public getTextHighlighted(query:string){
+    let words = query.split(' ');
+    let text = this.OriginalText.replace(/\p{M}/gu, '');
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i].replace(/\p{M}/gu, '');
+      text = text.replace(word, '<span class="selectedverse">'+ word+'</span>');  
+    }
+    
+    return text;
+  }
+
   public SearchableText: string = '';
   public Url:string = '';
   public IsSelected: boolean = false;

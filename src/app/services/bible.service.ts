@@ -5,6 +5,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Book } from '../models/book';
 import { BookGroup } from '../models/book-group';
 import { Chapter } from '../models/chapter';
+import { ResultGroup } from '../models/result-group';
+import { SearchResult } from '../models/search-result';
 import { Settings } from '../models/settings';
 import { Verse } from '../models/verse';
 import { Version } from '../models/version';
@@ -45,9 +47,6 @@ export class BibleService {
 
     this.Load();
 
-    this.processBooks(this.Versions[0], false);
-    this.processBooks(this.Versions[1], false);
-
     let current = this.Versions.find(v=>v.UniqueId == this.Settings.Version);
     if(current){
       this.SetVersion(current);
@@ -67,12 +66,15 @@ export class BibleService {
       this.Settings.Version = version.UniqueId;
       this.Settings.RTL = version.IsArabic;
       this.Save();
+      if(version.Books.length == 0){
+        this.processBooks(version, true);
+      }
       this.Version.next(version);
     }
   }
 
   private processBooks(version : Version, loadData : boolean ){
-
+    this.Loaded.next(false);
     this.http.get('/assets/'+version.Url+'/index.txt', {responseType: 'text'})
         .subscribe((data) => {
             console.log('/assets/'+version.Url+'/index.txt');
@@ -95,6 +97,8 @@ export class BibleService {
 
                     version.Books.push(book);
                     bookGroup.Books.push(book);
+
+                    this.ProcessChapters(book);
                 }
                 else{
                     if (version.BookGroups[0].Title === '')
@@ -107,19 +111,17 @@ export class BibleService {
                     }
                 }
             }
-
-            this.Loaded.next(true);
         });
   }
 
   public ProcessChapters(book : Book){
     if (book.IsLoaded.value == false)
     {
-        this.processChapters(book, true);
+        this.processChapters(book);
     }
   }
 
-  private processChapters(book:Book, loadData:boolean){
+  private processChapters(book:Book){
 
     this.http.get('/assets/'+book.Version.Url + '/' + book.UniqueId+'.txt', {responseType: 'text'})
       .subscribe((full) => {
@@ -163,6 +165,10 @@ export class BibleService {
         }
         book.Chapters.sort((a, b)=> a.Number - b.Number);
         book.IsLoaded.next(true);
+        this.Version.value.Loaded++;
+        if(this.Version.value.Loaded==this.Version.value.Total){
+          this.Loaded.next(true);
+        }
       });
   }
 
@@ -210,9 +216,10 @@ export class BibleService {
   private createVerse(chapter:Chapter, num:number, body:string):Verse{
     var v = new Verse();
     v.Number = num;
+    v.Title = chapter.ToString() + ':' + v.Number;
     v.Url = chapter.Url + "#" + num;
     v.Text = body;
-    v.SearchableText = this.MakeSearchable(body.trim());
+    v.SearchableText = this.MakeSearchable(v.OriginalText);
     chapter.Verses.push(v);
     chapter.Book.Verses.push(v);
     return v;
@@ -220,8 +227,10 @@ export class BibleService {
 
   public MakeSearchable(word:string){
       word = word.toLowerCase();
+      word = word.replace(/\p{M}/gu, '');
       var previousSpace = false;
       var builder = '';
+
       for (let i = 0; i < word.length; i++) {
 
           if (/\s/.test(word[i]) && previousSpace == false)
@@ -244,6 +253,8 @@ export class BibleService {
               builder+='د';
           else if (/^\d+$/.test(word[i]))
               builder+=word[i];
+          else
+              builder+=word[i];
       }
 
       return builder;
@@ -256,5 +267,126 @@ export class BibleService {
   
   Load() {
     this.Settings = JSON.parse(localStorage.getItem('settings')??'{}');
+  }
+
+  public Search(SearchQuery:string, SearchLocation:string):SearchResult {
+  var result = new SearchResult();
+
+  /*if (isNumber(SearchQuery))
+  {
+      //Try to go to chapter in the current book
+      //Otherwise this number is not going to be found in search
+      if (XmlSiteMapProvider.FindNode(SearchLocation.Url + "/" + SearchQuery) != null)
+      {
+          result.URL = XmlSiteMapProvider.FindNode(SearchLocation.Url + "/" + SearchQuery).Url;
+          return result;
+      }
+  }*/
+
+  //Bug fix: Adding a space between the first number that is preceded with letter
+  //So "Gen10" should be "Gen 10"
+  /*for (int i = 0; i < SearchQuery.Length - 1; i++)
+  {
+      if (char.IsLetter(SearchQuery[i]) && char.IsNumber(SearchQuery[i + 1]))
+      {
+          SearchQuery = SearchQuery.Insert(i + 1, " ");
+          break;
+      }
+  }*/
+
+  var keywords = SearchQuery.split(' ');//, ':', '-');
+  for (let i = 0; i < keywords.length; i++) {
+    console.log(keywords[i] + ' > ' + this.MakeSearchable(keywords[i]));
+    keywords[i] = this.MakeSearchable(keywords[i]);    
+  }
+  
+  var version = this.Version.value;
+
+  //Check for verse or chapter
+  /*int s = 0;
+  int shortcut = 0;
+  string key = "";
+  string url = "";
+  string number = "";
+
+  do
+  {
+      key += keywords[s];
+      s++;
+
+      if (Shortcuts.ContainsKey(key))
+      {
+          url = Shortcuts[key];
+          shortcut = s;
+      }
+  }
+  while (keywords.Length > s);
+
+  if (string.IsNullOrEmpty(url) == false)
+  {
+      if ((keywords.Length > shortcut) && (isNumber(keywords[shortcut])))
+      {
+          url = url + "/" + keywords[shortcut];
+          shortcut++;
+
+          if (keywords.Length > shortcut)
+          {
+              number = keywords[shortcut];
+              shortcut++;
+
+              if (keywords.Length > shortcut)
+              {
+                  number = number + "-" + keywords[shortcut];
+                  shortcut++;
+              }
+          }
+
+          result.URL = SearchLocation.Url + url;//, number);
+          return result;
+      }
+  }*/
+
+  //Actual Search
+  var searchResultsCount = 0;
+  version.Books.forEach(b => {
+    var currentGroup = new ResultGroup(b);
+      b.Verses.forEach(v => {
+        //if (this.inLocation(v.Url, SearchLocation)){  
+          var found = true;
+          keywords.forEach(keyword => {
+            if (v.SearchableText.indexOf(keyword) < 0){
+              found = false;
+            }
+          });
+            
+          if (found) {
+            searchResultsCount++;
+            currentGroup.Verses.push(v);
+          }
+        //}
+      });
+
+      if (currentGroup.Verses.length > 0){
+        result.TotalVerses+=currentGroup.Verses.length;
+        result.Groups.push(currentGroup);
+      }
+    });
+  
+    return result;
+  }
+
+  private inLocation(url:string, locations:string):boolean {
+    var l = locations.split(',');
+    for (let i = 0; i < l.length; i++) {
+      const location = l[i];
+      if (url.startsWith(location + "/") || url.startsWith(location + "#")){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private isNumber(text:string) {
+    return /^-?\d+$/.test(text);
   }
 }

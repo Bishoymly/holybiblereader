@@ -1,3 +1,6 @@
+<div class="progress" style="height: 1px;background-color: #111;">
+  <div class="progress-bar" role="progressbar" *ngIf="this.Bible.Version.value.Loaded<this.Bible.Version.value.Total" style="{{'width: '+(this.Bible.Version.value.Loaded*100)/(this.Bible.Version.value.Total)+'%;'}}"></div>
+</div>
 <nav class="navbar navbar-expand sticky-top navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand d-none d-sm-block" [routerLink]="['/']">
@@ -52,7 +55,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <input id="q" name="q" class="form-control col-2 me-2 search" placeholder="{{ 'SEARCH' | translate }}" aria-label="Search" value='' />
+        <input id="q" name="q" class="form-control col-2 me-2 search" placeholder="{{ 'SEARCH' | translate }}" aria-label="Search" value='' (keyup.enter)="search($event)" />
       </li>
     </ul>
   </div>

@@ -34,6 +34,8 @@ export class AppComponent {
         COPIED: 'Copied!',
         DARK: 'Dark Mode',
         SEARCH: 'Search',
+        FOUND: 'Found',
+        VERSESFOR: 'verses for',
       });
 
       translate.setTranslation('ar', {
@@ -45,6 +47,8 @@ export class AppComponent {
         COPIED: 'تم النسخ!',
         DARK: 'داكن',
         SEARCH: 'بحث',
+        FOUND: '',
+        VERSESFOR: 'نتائج البحث عن',
       });
   }
 
@@ -162,6 +166,23 @@ export class AppComponent {
       }
       event.preventDefault();
     }
+  }
+
+  search(event:any){
+    let query = event.target.value;
+    let path = location.pathname;
+    if(this.route.snapshot.queryParams.where){
+      path = this.route.snapshot.queryParams.where;
+    }
+    
+    if(path=='' || path == '/'){
+      path = this.Bible.Version.value.Url;
+    }
+
+    if(path.startsWith('/')){
+      path = path.substring(1);
+    }
+    this.router.navigate(['search'], { queryParams: {q:query, where:path}});
   }
 
   @HostListener('window:scroll', ['$event'])
