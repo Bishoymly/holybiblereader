@@ -27,7 +27,8 @@ export class Verse {
     let text = this.OriginalText.replace(/\p{M}/gu, '');
     for (let i = 0; i < words.length; i++) {
       const word = words[i].replace(/\p{M}/gu, '');
-      text = text.replace(word, '<span class="selectedverse">'+ word+'</span>');  
+      var regEx = new RegExp(word, "ig");
+      text = text.replace(regEx, '<span class="selectedverse">'+ word+'</span>');  
     }
     
     return text;
