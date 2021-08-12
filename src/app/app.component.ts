@@ -155,7 +155,7 @@ export class AppComponent {
 
   switchToVersion(event:Event, name:string){
     
-    let url = window.location.pathname.split('/');
+    /*let url = window.location.pathname.split('/');
     let fragment = window.location.hash.split('#');
     if(url.length>3){
       if(fragment && fragment.length>1){
@@ -165,7 +165,7 @@ export class AppComponent {
         this.router.navigate([name, url[2], url[3], url[4]]);
       }
       event.preventDefault();
-    }
+    }*/
   }
 
   search(event:any){
