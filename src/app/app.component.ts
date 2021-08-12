@@ -43,7 +43,7 @@ export class AppComponent {
         NEXT: 'التالي',
         PREVIOUS: 'السابق',
         COPY: 'نسخ',
-        SHARE: 'نشر',
+        SHARE: 'شارك',
         COPIED: 'تم النسخ!',
         DARK: 'داكن',
         SEARCH: 'بحث',

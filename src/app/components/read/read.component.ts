@@ -154,7 +154,7 @@ export class ReadComponent implements OnInit {
 
   copy(){
     if(this.Chapter){
-      navigator.clipboard.writeText(this.Chapter.ToString() + ' : ' + this.Chapter.SelectedVerses.map(v=>v.Number + ' ' + v.OriginalText).join(''));
+      navigator.clipboard.writeText(this.getText());
       var toast = document.getElementById('copied');
       if(toast){
         var oldClassName = toast.className;
@@ -168,11 +168,16 @@ export class ReadComponent implements OnInit {
     }
   }
 
+  getText(){
+    return this.Chapter?.SelectedVerses.map(v=>v.OriginalText).join('') + ' (' + 
+      this.Chapter?.ToString() + ':' + this.route.snapshot.fragment + ')';
+  }
+
   share(){
     if(this.Chapter){
       navigator.share({
         title: this.Chapter.ToString() + ':' + this.route.snapshot.fragment,
-        text: this.Chapter.ToString() + ' : ' + this.Chapter.SelectedVerses.map(v=>v.Number + ' ' + v.OriginalText).join(''),
+        text: this.getText(),
         url: window.location.toString()
       });
     }

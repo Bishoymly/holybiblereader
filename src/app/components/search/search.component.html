@@ -1,6 +1,6 @@
 <div class="content">
 
-    <h2>{{ 'FOUND' | translate}} {{this.Results.TotalVerses}} {{ 'VERSESFOR' | translate}} '{{this.Query}}'</h2>
+    <h2>{{ 'FOUND' | translate}} {{this.Results.TotalVerses}} {{ 'VERSESFOR' | translate}} '<span class="selectedverse">{{this.Query}}</span>'</h2>
     
     <div *ngFor="let group of this.Results.Groups">
         <h3>{{group.Book.Title + ' (' + group.Verses.length + ')'}}</h3>
