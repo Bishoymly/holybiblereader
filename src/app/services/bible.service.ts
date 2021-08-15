@@ -40,9 +40,10 @@ export class BibleService {
     v.Url = 'arabic';
     v.IsArabic = true;
     v.Title = 'الكتاب المقدس';
-    v.BookGroups.push(new BookGroup(), new BookGroup());
+    v.BookGroups.push(new BookGroup(), new BookGroup(), new BookGroup());
     v.BookGroups[0].Url = 'arabic/old';
     v.BookGroups[1].Url = 'arabic/new';
+    v.BookGroups[2].Url = 'arabic/second';
     this.Versions.push(v);
 
     this.Load();
@@ -89,6 +90,9 @@ export class BibleService {
                     if (version.BookGroups[0].Books.length >= 39){
                       bookGroup = version.BookGroups[1];
                     }
+                    if (version.BookGroups[1].Books.length >= 27){
+                      bookGroup = version.BookGroups[2];
+                    }
 
                     var book = new Book(version);
                     book.UniqueId = words[0];
@@ -109,6 +113,10 @@ export class BibleService {
                     {
                         version.BookGroups[1].Title = line;
                     }
+                    else if (version.BookGroups[2].Title === '')
+                    {
+                        version.BookGroups[2].Title = line;
+                    }
                 }
             }
         });
@@ -128,11 +136,7 @@ export class BibleService {
         console.log('/assets/'+book.Version.Url + '/' + book.UniqueId+'.txt');
         var chapter : Chapter | null = null;
         var str : string = '';
-        
-        if(book.Version.IsArabic){
-          full = full.replace(/\r\n\r\n/g, '<break>');
-        }
-        
+
         book.Chapters = [];
 
         for (const line of full.split(/[\r\n]+/)){
@@ -175,16 +179,11 @@ export class BibleService {
   private processContent(body : string, chapter : Chapter) : string {
 
     body = body.trim();
-    
-    if(chapter.Book.Version.IsArabic){
-      body = body.replace(/\r/g, '').replace(/\r/g, '');
-      body = body.replace(/<break>/g, '\r\n\r\n');
-    }
-    
+
     if(!this.Settings.Tashkeel){
       body = body.replace(/\p{M}/gu, '');
     }
-    
+
     //body = body.replace((char)160, (char)32);
 
     //Index verses
@@ -264,7 +263,7 @@ export class BibleService {
     const jsonData = JSON.stringify(this.Settings);
     localStorage.setItem('settings', jsonData);
   }
-  
+
   Load() {
     this.Settings = JSON.parse(localStorage.getItem('settings')??'{}');
   }
@@ -297,9 +296,9 @@ export class BibleService {
   var keywords = SearchQuery.split(' ');//, ':', '-');
   for (let i = 0; i < keywords.length; i++) {
     console.log(keywords[i] + ' > ' + this.MakeSearchable(keywords[i]));
-    keywords[i] = this.MakeSearchable(keywords[i]);    
+    keywords[i] = this.MakeSearchable(keywords[i]);
   }
-  
+
   var version = this.Version.value;
 
   //Check for verse or chapter
@@ -351,14 +350,14 @@ export class BibleService {
   version.Books.forEach(b => {
     var currentGroup = new ResultGroup(b);
       b.Verses.forEach(v => {
-        //if (this.inLocation(v.Url, SearchLocation)){  
+        //if (this.inLocation(v.Url, SearchLocation)){
           var found = true;
           keywords.forEach(keyword => {
             if (v.SearchableText.indexOf(keyword) < 0){
               found = false;
             }
           });
-            
+
           if (found) {
             searchResultsCount++;
             currentGroup.Verses.push(v);
@@ -371,7 +370,7 @@ export class BibleService {
         result.Groups.push(currentGroup);
       }
     });
-  
+
     return result;
   }
 

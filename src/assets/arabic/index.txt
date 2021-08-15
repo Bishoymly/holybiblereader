@@ -20,7 +20,7 @@ job,ﺃﻳﻮﺏ
 psalm,مزامير
 proverbs,ﺃﻣﺜﺎﻝ
 ecclesiastes,جامعة
-songs,ﻧﺸﻴﺪ ﺍﻷﻧﺸﺎد 
+songs,ﻧﺸﻴﺪ ﺍﻷﻧﺸﺎد
 isaiah,ﺃﺷﻌﻴﺎء
 jeremiah,ﺃﺭﻣﻴﺎء
 lamentations,ﻣﺮﺍﺛﻲ ﺇﺭﻣﻴﺎء
@@ -66,3 +66,14 @@ james,يعقوب
 3john,يوحنا الثالثة
 jude,يهوذا
 revelation,رؤيا يوحنا اللاهوتي
+الأسفار القانونية الثانية
+tobia,طوبيا
+yahodet,يهوديت
+esther-2,تتمة سفر أستير
+psalm-151,المزمور المائة والحادي والخمسون
+judgement,سفر الحكمة
+jushua-bin-serakh,سفر يشوع بن سيراخ
+barokh,سفر باروخ
+danial-2,تتمة سفر دانيال
+makabeen-1,سفر المكابيين الأول
+makabeen-2,سفر المكابيين الثاني
