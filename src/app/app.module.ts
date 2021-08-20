@@ -10,6 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ReadComponent } from './components/read/read.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchComponent } from './components/search/search.component';
+import { ListComponent } from './components/list/list.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SearchComponent } from './components/search/search.component';
     AppComponent,
     HomeComponent,
     ReadComponent,
-    SearchComponent
+    SearchComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,

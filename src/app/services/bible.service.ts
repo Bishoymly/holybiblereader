@@ -78,7 +78,7 @@ export class BibleService {
     this.Loaded.next(false);
     this.http.get('/assets/'+version.Url+'/index.txt', {responseType: 'text'})
         .subscribe((data) => {
-            console.log('/assets/'+version.Url+'/index.txt');
+            //console.log('/assets/'+version.Url+'/index.txt');
             var i = 0;
             for (const line of data.split(/[\r\n]+/)){
 
@@ -133,7 +133,7 @@ export class BibleService {
 
     this.http.get('/assets/'+book.Version.Url + '/' + book.UniqueId+'.txt', {responseType: 'text'})
       .subscribe((full) => {
-        console.log('/assets/'+book.Version.Url + '/' + book.UniqueId+'.txt');
+        //console.log('/assets/'+book.Version.Url + '/' + book.UniqueId+'.txt');
         var chapter : Chapter | null = null;
         var str : string = '';
 
@@ -295,7 +295,7 @@ export class BibleService {
 
   var keywords = SearchQuery.split(' ');//, ':', '-');
   for (let i = 0; i < keywords.length; i++) {
-    console.log(keywords[i] + ' > ' + this.MakeSearchable(keywords[i]));
+    //console.log(keywords[i] + ' > ' + this.MakeSearchable(keywords[i]));
     keywords[i] = this.MakeSearchable(keywords[i]);
   }
 

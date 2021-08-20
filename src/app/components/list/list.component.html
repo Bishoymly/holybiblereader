@@ -1,0 +1,16 @@
+<div class="content">
+    <h2>{{this.BookGroup?.Title}}</h2>
+    <div class="row" *ngIf="this.BookGroup">
+        <div class="col-lg-6">
+            <ul>
+                <li *ngFor='let book of this.BookGroup.Books.slice(0, 20)'><a [routerLink]="['/' + book.Url, 1]">{{book.Title}}</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <ul>
+                <li *ngFor='let book of this.BookGroup.Books.slice(20, 50)'><a [routerLink]="['/' + book.Url, 1]">{{book.Title}}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+  
