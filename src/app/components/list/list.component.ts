@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { BookGroup } from 'src/app/models/book-group';
 import { BibleService } from 'src/app/services/bible.service';
@@ -14,7 +15,8 @@ export class ListComponent implements OnInit {
   
   constructor(
     public Bible: BibleService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: Title,
     ) { }
 
   ngOnInit(): void {
@@ -25,6 +27,10 @@ export class ListComponent implements OnInit {
           if(v){
             this.Bible.SetVersion(v);
             this.BookGroup = this.Bible.Version.value.BookGroups.find(b=>b.Url == url[0].path + '/' + url[1].path);
+            if(this.BookGroup){
+              alert(this.BookGroup.Title);
+              this.titleService.setTitle(this.BookGroup.Title);
+            }            
           }
         }
     });

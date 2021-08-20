@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { BibleService } from 'src/app/services/bible.service';
 
@@ -11,18 +12,20 @@ export class HomeComponent implements OnInit {
 
   constructor(
     public Bible: BibleService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: Title,
     ) { }
 
   ngOnInit(): void {
     this.route.url.subscribe( route => {
       var url = route;
-        if(url.length>0){
-          let v = this.Bible.Versions.find(v=>v.UniqueId == url[0].path);
-          if(v){
-            this.Bible.SetVersion(v);
-          }
+      if(url.length>0){
+        let v = this.Bible.Versions.find(v=>v.UniqueId == url[0].path);
+        if(v){
+          this.Bible.SetVersion(v);
         }
+      }
+      this.titleService.setTitle(this.Bible.Version.value.Title);
     });
   }
 }

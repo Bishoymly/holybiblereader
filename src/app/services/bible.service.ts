@@ -32,7 +32,9 @@ export class BibleService {
     v.Title = 'King James Bible';
     v.BookGroups.push(new BookGroup(), new BookGroup());
     v.BookGroups[0].Url = 'kjames/old';
+    v.BookGroups[0].Title = 'Old Testament';
     v.BookGroups[1].Url = 'kjames/new';
+    v.BookGroups[1].Title = 'New Testament';
     this.Versions.push(v);
 
     v = new Version();
@@ -42,8 +44,11 @@ export class BibleService {
     v.Title = 'الكتاب المقدس';
     v.BookGroups.push(new BookGroup(), new BookGroup(), new BookGroup());
     v.BookGroups[0].Url = 'arabic/old';
+    v.BookGroups[0].Title = 'العهدالقديم';
     v.BookGroups[1].Url = 'arabic/new';
+    v.BookGroups[1].Title = 'العهد الجديد';
     v.BookGroups[2].Url = 'arabic/second';
+    v.BookGroups[2].Title = 'الاسفار القانونية الثانية';
     this.Versions.push(v);
 
     this.Load();
