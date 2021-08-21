@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.canonical.createCanonicalLink();
     this.route.url.subscribe( route => {
       var url = route;
       if(url.length>0){
@@ -29,6 +28,7 @@ export class HomeComponent implements OnInit {
         }
       }
       this.titleService.setTitle(this.Bible.Version.value.Title);
+      this.canonical.createCanonicalLink("https://holybiblereader.com/" + this.Bible.Version.value.Url);
     });
   }
 }
