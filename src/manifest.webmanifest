@@ -19,5 +19,32 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "King James Bible",
+      "short_name": "King James",
+      "description": "Read King James Bible",
+      "url": "/kjames",
+      "icons": [
+        {
+          "src": "assets/icons/kjames-icon-512.png",
+          "sizes": "512x512"
+        }
+      ]
+    },
+    {
+      "name": "الكتاب المقدس",
+      "short_name": "الكتاب المقدس",
+      "description": "الكتاب المقدس",
+      "url": "/arabic",
+      "icons": [
+        {
+          "src": "assets/icons/arabic-icon-512.png",
+          "sizes": "512x512"
+        }
+      ]
+    }
+  ],
+  "description": "Read the bible today",
 }
