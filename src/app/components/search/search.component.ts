@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ResultGroup } from 'src/app/models/result-group';
 import { SearchResult } from 'src/app/models/search-result';
 import { BibleService } from 'src/app/services/bible.service';
+import { CanonicalService } from 'src/app/services/canonical.service';
 
 @Component({
   selector: 'app-search',
@@ -20,10 +21,12 @@ export class SearchComponent implements OnInit {
     private route: ActivatedRoute,
     public router : Router,
     private titleService: Title,
-    public Bible: BibleService
+    public Bible: BibleService,
+    private canonical:CanonicalService
   ) { }
 
   ngOnInit(): void {
+    this.canonical.createCanonicalLink();
     this.route.url.subscribe( route => {
       var url = route;
       this.Bible.Loaded.subscribe( loaded => {

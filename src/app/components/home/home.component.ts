@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { BibleService } from 'src/app/services/bible.service';
+import { CanonicalService } from 'src/app/services/canonical.service';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,11 @@ export class HomeComponent implements OnInit {
     public Bible: BibleService,
     private route: ActivatedRoute,
     private titleService: Title,
+    private canonical:CanonicalService
     ) { }
 
   ngOnInit(): void {
+    this.canonical.createCanonicalLink();
     this.route.url.subscribe( route => {
       var url = route;
       if(url.length>0){

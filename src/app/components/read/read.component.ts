@@ -6,6 +6,7 @@ import { Book } from 'src/app/models/book';
 import { Chapter } from 'src/app/models/chapter';
 import { Verse } from 'src/app/models/verse';
 import { BibleService } from 'src/app/services/bible.service';
+import { CanonicalService } from 'src/app/services/canonical.service';
 import { __asyncDelegator } from 'tslib';
 
 @Component({
@@ -26,11 +27,14 @@ export class ReadComponent implements OnInit {
     public router : Router,
     private viewportScroller: ViewportScroller,
     private titleService: Title,
-    public Bible: BibleService
+    public Bible: BibleService,
+    private canonical:CanonicalService
   ) { }
 
   ngOnInit(): void {
+
     this.route.url.subscribe( route => {
+      this.canonical.createCanonicalLink();
       var url = route;
       this.Bible.Loaded.subscribe( loaded => {
         let v = this.Bible.Versions.find(v=>v.UniqueId == url[0].path);
@@ -42,7 +46,7 @@ export class ReadComponent implements OnInit {
           this.ScrollToVerse = true;
           this.Book = b;
         }
-        
+
         if(this.Book){
           this.Bible.ProcessChapters(this.Book);
           this.Book.IsLoaded.subscribe(loaded => {
@@ -56,7 +60,7 @@ export class ReadComponent implements OnInit {
                 this.setVerse('');
                 if(this.Chapter.Number!=1){
                   this.ShowChapters = false;
-                }                
+                }
               }
             }
           })
@@ -71,7 +75,7 @@ export class ReadComponent implements OnInit {
       else{
         this.setVerse('');
       }
-    });    
+    });
   }
 
   nextChapter(selectVerse = false){
@@ -114,12 +118,12 @@ export class ReadComponent implements OnInit {
           ch = this.Book.Chapters.length;
         }
       }
-      
+
       if(ch == 0){
         ch = 1;
         selectVerse = false;
       }
-      
+
       if(selectVerse){
         this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == ch.toString());
         this.router.navigate([this.Book.Url, ch.toString()], { fragment: this.Chapter?.Verses.length.toString() });
@@ -142,7 +146,7 @@ export class ReadComponent implements OnInit {
         else{
           setTimeout(()=>this.viewportScroller.scrollToAnchor(this.VerseNumber.toString()), 1);
         }
-      }      
+      }
     }
   }
 
@@ -169,7 +173,7 @@ export class ReadComponent implements OnInit {
   }
 
   getText(){
-    return this.Chapter?.SelectedVerses.map(v=>v.OriginalText).join('') + ' (' + 
+    return this.Chapter?.SelectedVerses.map(v=>v.OriginalText).join('') + ' (' +
       this.Chapter?.ToString() + ':' + this.route.snapshot.fragment + ')';
   }
 
@@ -227,8 +231,8 @@ export class ReadComponent implements OnInit {
             }
           }
         }
-      
-      switch(event.code){  
+
+      switch(event.code){
         case 'KeyC':
           if(event.ctrlKey){
             this.copy();

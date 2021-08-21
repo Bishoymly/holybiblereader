@@ -1,8 +1,10 @@
 import { Component, HostListener } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideInAnimation } from './animations';
 import { BibleService } from './services/bible.service';
+import { CanonicalService } from './services/canonical.service';
 
 @Component({
   selector: 'app-root',
@@ -20,9 +22,11 @@ export class AppComponent {
     public Bible:BibleService,
     public route: ActivatedRoute,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private meta:Meta,
+    private canonical: CanonicalService
   ) {
-    
+
       translate.setDefaultLang('en');
 
       translate.setTranslation('en', {
@@ -56,6 +60,9 @@ export class AppComponent {
     this.Bible.Version.subscribe(version => {
       this.prepareDoc();
     });
+
+    this.meta.addTag({name: 'robots', content: 'index, follow'});
+    this.canonical.createCanonicalLink();
   }
 
   prepareRoute(outlet: RouterOutlet) {
@@ -82,7 +89,7 @@ export class AppComponent {
     if(this.Bible.Settings.FontSize!=''){
       document.body.classList.add(this.Bible.Settings.FontSize);
     }
-        
+
     if(this.Bible.Settings.RTL){
       document.body.dir = "rtl";
       document.body.lang = "ar";
@@ -154,7 +161,7 @@ export class AppComponent {
   }
 
   switchToVersion(event:Event, name:string){
-    
+
     /*let url = window.location.pathname.split('/');
     let fragment = window.location.hash.split('#');
     if(url.length>3){
@@ -174,7 +181,7 @@ export class AppComponent {
     if(this.route.snapshot.queryParams.where){
       path = this.route.snapshot.queryParams.where;
     }
-    
+
     if(path=='' || path == '/'){
       path = this.Bible.Version.value.Url;
     }

@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { BookGroup } from 'src/app/models/book-group';
 import { BibleService } from 'src/app/services/bible.service';
+import { CanonicalService } from 'src/app/services/canonical.service';
 
 @Component({
   selector: 'app-list',
@@ -12,14 +13,16 @@ import { BibleService } from 'src/app/services/bible.service';
 export class ListComponent implements OnInit {
 
   public BookGroup : BookGroup | undefined;
-  
+
   constructor(
     public Bible: BibleService,
     private route: ActivatedRoute,
     private titleService: Title,
+    private canonical:CanonicalService
     ) { }
 
   ngOnInit(): void {
+    this.canonical.createCanonicalLink();
     this.route.url.subscribe( route => {
       var url = route;
         if(url.length>0){
@@ -30,7 +33,7 @@ export class ListComponent implements OnInit {
             if(this.BookGroup){
               alert(this.BookGroup.Title);
               this.titleService.setTitle(this.BookGroup.Title);
-            }            
+            }
           }
         }
     });
