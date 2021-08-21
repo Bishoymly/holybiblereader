@@ -1,8 +1,8 @@
 <div class="content">
-  <h2>{{Bible.Version.value.Title}}</h2>
+  <h1>{{Bible.Version.value.Title}}</h1>
   <div class="row">
     <div class="col-6" *ngFor='let bookGroup of Bible.Version.value.BookGroups.slice(0,2); let i = index'>
-      <h3>{{bookGroup.Title }}</h3>
+      <h2><a [routerLink]="['/' + bookGroup.Url]">{{bookGroup.Title }}</a></h2>
       <div class="row">
         <div class="col-lg-6">
             <ul>
@@ -14,7 +14,7 @@
               <li *ngFor='let book of bookGroup.Books.slice(20, 50)'><a [routerLink]="['/' + book.Url, 1]">{{book.Title}}</a></li>
           </ul>
           <div *ngIf="i==1 && Bible.Version.value.BookGroups.length>2">
-            <h3 style="margin-top:2em">{{Bible.Version.value.BookGroups[2].Title}}</h3>
+            <h2 style="margin-top:2em"><a [routerLink]="['/' + Bible.Version.value.BookGroups[2].Url]">{{Bible.Version.value.BookGroups[2].Title}}</a></h2>
             <ul>
               <li *ngFor='let book2 of Bible.Version.value.BookGroups[2].Books'><a [routerLink]="['/' + book2.Url, 1]">{{book2.Title}}</a></li>
             </ul>

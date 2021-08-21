@@ -1,7 +1,7 @@
 <div class="content">
 
-    <h2>{{ 'FOUND' | translate}} {{this.Results.TotalVerses}} {{ 'VERSESFOR' | translate}} '<span class="selectedverse">{{this.Query}}</span>'</h2>
-    
+    <h1>{{ 'FOUND' | translate}} {{this.Results.TotalVerses}} {{ 'VERSESFOR' | translate}} '<span class="selectedverse">{{this.Query}}</span>'</h1>
+
     <div *ngFor="let group of this.Results.Groups">
         <h3>{{group.Book.Title + ' (' + group.Verses.length + ')'}}</h3>
         <ul class="results">
@@ -10,14 +10,14 @@
                 <span [innerHTML]="verse.getTextHighlighted(this.Query)"></span>
             </li>
         </ul>
-    </div>   
+    </div>
 
     <div class="alert alert-warning hide" role="alert">
-        You can also search in 
+        You can also search in
         <a href="/search?q=god&amp;where=/kjames/old/genesis">Genesis</a>
-        or 
+        or
         <a href="/search?q=god&amp;where=/kjames/old">Old Testament</a>
-        or 
+        or
         <a href="/search?q=god&amp;where=/kjames">King James Bible</a>
     </div>
 </div>

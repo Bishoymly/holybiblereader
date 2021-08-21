@@ -40,6 +40,8 @@ export class AppComponent {
         SEARCH: 'Search',
         FOUND: 'Found',
         VERSESFOR: 'verses for',
+        LANG: 'Change Language',
+        FONT: 'Change Font'
       });
 
       translate.setTranslation('ar', {
@@ -53,6 +55,8 @@ export class AppComponent {
         SEARCH: 'بحث',
         FOUND: '',
         VERSESFOR: 'نتائج البحث عن',
+        LANG: 'تغيير اللغة',
+        FONT: 'تغيير الخط'
       });
   }
 

@@ -31,7 +31,6 @@ export class ListComponent implements OnInit {
             this.Bible.SetVersion(v);
             this.BookGroup = this.Bible.Version.value.BookGroups.find(b=>b.Url == url[0].path + '/' + url[1].path);
             if(this.BookGroup){
-              alert(this.BookGroup.Title);
               this.titleService.setTitle(this.BookGroup.Title);
             }
           }

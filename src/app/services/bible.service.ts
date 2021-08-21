@@ -118,7 +118,7 @@ export class BibleService {
                     {
                         version.BookGroups[1].Title = line;
                     }
-                    else if (version.BookGroups[2].Title === '')
+                    else if (version.BookGroups[2]?.Title === '')
                     {
                         version.BookGroups[2].Title = line;
                     }
