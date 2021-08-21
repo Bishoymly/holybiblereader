@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
           this.Bible.SetVersion(v);
         }
       }
-      this.titleService.setTitle(this.Bible.Version.value.Title);
+      this.titleService.setTitle(this.Bible.Version.value.Title + " | Holy Bible Reader");
       this.canonical.createCanonicalLink("https://holybiblereader.com/" + this.Bible.Version.value.Url);
     });
   }

@@ -41,7 +41,7 @@ export class SearchComponent implements OnInit {
       this.Bible.Loaded.subscribe( loaded => {
         this.Query = this.route.snapshot.queryParams.q;
         this.Location = this.route.snapshot.queryParams.where;
-        this.titleService.setTitle('Search for \''+this.Query+'\'');
+        this.titleService.setTitle('Search for \''+this.Query+'\'' + " | " + this.Bible.Version.value.Title + " | Holy Bible Reader");
         if(loaded){
           this.Results = this.Bible.Search(this.Query, this.route.snapshot.queryParams.where);
         }

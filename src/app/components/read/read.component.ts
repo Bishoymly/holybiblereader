@@ -52,7 +52,7 @@ export class ReadComponent implements OnInit {
           this.Book.IsLoaded.subscribe(loaded => {
             this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == url[3].path);
             if(this.Chapter){
-              this.titleService.setTitle(this.Chapter.ToString());
+              this.titleService.setTitle(this.Chapter.ToString() + " | " + this.Bible.Version.value.Title + " | Holy Bible Reader");
               if(this.route.snapshot.fragment){
                 this.setVerse(this.route.snapshot.fragment);
               }
