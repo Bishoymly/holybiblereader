@@ -39,4 +39,13 @@ export class SEOService {
     this.meta.addTag({ name: 'twitter:title', content: title});
   }
 
+  setDescription(desc: string){
+    this.meta.removeTag('name="description"');
+    this.meta.removeTag('property="og:description"');
+    this.meta.removeTag('name="twitter:description"');
+    this.meta.addTag({ name: 'description', content: desc});
+    this.meta.addTag({ property: 'og:description', content: desc});
+    this.meta.addTag({ name: 'twitter:description', content: desc});
+  }
+
 }

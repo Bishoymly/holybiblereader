@@ -55,6 +55,7 @@ export class ReadComponent implements OnInit {
             this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == url[3].path);
             if(this.Chapter){
               this.seo.setTitle(this.Chapter.ToString() + " | " + this.Bible.Version.value.Title + " | Holy Bible Reader");
+
               if(this.route.snapshot.fragment){
                 this.setVerse(this.route.snapshot.fragment);
               }
@@ -64,6 +65,7 @@ export class ReadComponent implements OnInit {
                   this.ShowChapters = false;
                 }
               }
+              this.seo.setDescription(this.getText());
             }
           })
         }
@@ -77,6 +79,7 @@ export class ReadComponent implements OnInit {
       else{
         this.setVerse('');
       }
+      this.seo.setDescription(this.getText());
     });
   }
 
@@ -174,9 +177,14 @@ export class ReadComponent implements OnInit {
     }
   }
 
-  getText(){
-    return this.Chapter?.SelectedVerses.map(v=>v.OriginalText).join('') + ' (' +
-      this.Chapter?.ToString() + ':' + this.route.snapshot.fragment + ')';
+  getText() : string {
+    if(this.Chapter && this.Chapter.SelectedVerses.length>0){
+      return this.Chapter?.SelectedVerses.map(v=>v.OriginalText).join('') + ' (' +
+        this.Chapter?.ToString() + ':' + this.route.snapshot.fragment + ')';
+    }
+    else{
+      return this.Chapter?this.Chapter.Verses[0].OriginalText:'';
+    }
   }
 
   share(){
