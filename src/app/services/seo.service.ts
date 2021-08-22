@@ -1,14 +1,18 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class CanonicalService {
+export class SEOService {
 
-  constructor(@Inject(DOCUMENT) private dom:any) { }
+  constructor(
+    @Inject(DOCUMENT) private dom:any,
+    private titleService: Title,
+    private meta: Meta) { }
 
   createCanonicalLink(url?: string) {
     let canURL = url == undefined ? this.dom.URL : url;
@@ -25,6 +29,14 @@ export class CanonicalService {
     }
 
     link.setAttribute('href', canURL);
+  }
+
+  setTitle(title: string){
+    this.titleService.setTitle(title);
+    this.meta.removeTag('property="og:title"');
+    this.meta.removeTag('name="twitter:title"');
+    this.meta.addTag({ property: 'og:title', content: title});
+    this.meta.addTag({ name: 'twitter:title', content: title});
   }
 
 }

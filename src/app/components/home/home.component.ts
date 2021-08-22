@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { BibleService } from 'src/app/services/bible.service';
-import { CanonicalService } from 'src/app/services/canonical.service';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +14,7 @@ export class HomeComponent implements OnInit {
   constructor(
     public Bible: BibleService,
     private route: ActivatedRoute,
-    private titleService: Title,
-    private canonical:CanonicalService
+    private seo:SEOService
     ) { }
 
   ngOnInit(): void {
@@ -27,8 +26,8 @@ export class HomeComponent implements OnInit {
           this.Bible.SetVersion(v);
         }
       }
-      this.titleService.setTitle(this.Bible.Version.value.Title + " | Holy Bible Reader");
-      this.canonical.createCanonicalLink("https://holybiblereader.com/" + this.Bible.Version.value.Url);
+      this.seo.setTitle(this.Bible.Version.value.Title + " | Holy Bible Reader");
+      this.seo.createCanonicalLink("https://holybiblereader.com/" + this.Bible.Version.value.Url);
     });
   }
 }

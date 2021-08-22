@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { slideInAnimation } from './animations';
 import { BibleService } from './services/bible.service';
-import { CanonicalService } from './services/canonical.service';
+import { SEOService } from './services/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +24,7 @@ export class AppComponent {
     private router: Router,
     private translate: TranslateService,
     private meta:Meta,
-    private canonical: CanonicalService
+    private seo: SEOService
   ) {
 
       translate.setDefaultLang('en');
@@ -66,7 +66,8 @@ export class AppComponent {
     });
 
     this.meta.addTag({name: 'robots', content: 'index, follow'});
-    this.canonical.createCanonicalLink();
+    this.seo.createCanonicalLink();
+    this.seo.setTitle("Holy Bible Reader");
   }
 
   prepareRoute(outlet: RouterOutlet) {

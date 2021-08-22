@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ResultGroup } from 'src/app/models/result-group';
 import { SearchResult } from 'src/app/models/search-result';
 import { BibleService } from 'src/app/services/bible.service';
-import { CanonicalService } from 'src/app/services/canonical.service';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-search',
@@ -20,13 +20,12 @@ export class SearchComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public router : Router,
-    private titleService: Title,
     public Bible: BibleService,
-    private canonical:CanonicalService
+    private seo:SEOService
   ) { }
 
   ngOnInit(): void {
-    this.canonical.createCanonicalLink();
+    this.seo.createCanonicalLink();
     this.route.url.subscribe( route => {
       var url = route;
       this.Bible.Loaded.subscribe( loaded => {
@@ -41,7 +40,7 @@ export class SearchComponent implements OnInit {
       this.Bible.Loaded.subscribe( loaded => {
         this.Query = this.route.snapshot.queryParams.q;
         this.Location = this.route.snapshot.queryParams.where;
-        this.titleService.setTitle('Search for \''+this.Query+'\'' + " | " + this.Bible.Version.value.Title + " | Holy Bible Reader");
+        this.seo.setTitle('Search for \''+this.Query+'\'' + " | " + this.Bible.Version.value.Title + " | Holy Bible Reader");
         if(loaded){
           this.Results = this.Bible.Search(this.Query, this.route.snapshot.queryParams.where);
         }

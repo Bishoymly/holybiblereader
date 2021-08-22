@@ -6,7 +6,7 @@ import { Book } from 'src/app/models/book';
 import { Chapter } from 'src/app/models/chapter';
 import { Verse } from 'src/app/models/verse';
 import { BibleService } from 'src/app/services/bible.service';
-import { CanonicalService } from 'src/app/services/canonical.service';
+import { SEOService } from 'src/app/services/seo.service';
 import { __asyncDelegator } from 'tslib';
 
 @Component({
@@ -26,15 +26,14 @@ export class ReadComponent implements OnInit {
     private route: ActivatedRoute,
     public router : Router,
     private viewportScroller: ViewportScroller,
-    private titleService: Title,
     public Bible: BibleService,
-    private canonical:CanonicalService
+    private seo:SEOService
   ) { }
 
   ngOnInit(): void {
 
     this.route.url.subscribe( route => {
-      this.canonical.createCanonicalLink();
+      this.seo.createCanonicalLink();
       var url = route;
       this.Bible.Loaded.subscribe( loaded => {
         let v = this.Bible.Versions.find(v=>v.UniqueId == url[0].path);
@@ -52,7 +51,7 @@ export class ReadComponent implements OnInit {
           this.Book.IsLoaded.subscribe(loaded => {
             this.Chapter = this.Book?.Chapters.find(b=>b.UniqueId == url[3].path);
             if(this.Chapter){
-              this.titleService.setTitle(this.Chapter.ToString() + " | " + this.Bible.Version.value.Title + " | Holy Bible Reader");
+              this.seo.setTitle(this.Chapter.ToString() + " | " + this.Bible.Version.value.Title + " | Holy Bible Reader");
               if(this.route.snapshot.fragment){
                 this.setVerse(this.route.snapshot.fragment);
               }

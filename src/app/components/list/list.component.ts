@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { BookGroup } from 'src/app/models/book-group';
 import { BibleService } from 'src/app/services/bible.service';
-import { CanonicalService } from 'src/app/services/canonical.service';
+import { SEOService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-list',
@@ -17,12 +17,11 @@ export class ListComponent implements OnInit {
   constructor(
     public Bible: BibleService,
     private route: ActivatedRoute,
-    private titleService: Title,
-    private canonical:CanonicalService
+    private seo:SEOService
     ) { }
 
   ngOnInit(): void {
-    this.canonical.createCanonicalLink();
+    this.seo.createCanonicalLink();
     this.route.url.subscribe( route => {
       var url = route;
         if(url.length>0){
@@ -31,7 +30,7 @@ export class ListComponent implements OnInit {
             this.Bible.SetVersion(v);
             this.BookGroup = this.Bible.Version.value.BookGroups.find(b=>b.Url == url[0].path + '/' + url[1].path);
             if(this.BookGroup){
-              this.titleService.setTitle(this.BookGroup.Title + " | " + this.Bible.Version.value.Title + " | Holy Bible Reader");
+              this.seo.setTitle(this.BookGroup.Title + " | " + this.Bible.Version.value.Title + " | Holy Bible Reader");
             }
           }
         }
