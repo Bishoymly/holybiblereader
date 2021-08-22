@@ -3,6 +3,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Book } from 'src/app/models/book';
+import { BookGroup } from 'src/app/models/book-group';
 import { Chapter } from 'src/app/models/chapter';
 import { Verse } from 'src/app/models/verse';
 import { BibleService } from 'src/app/services/bible.service';
@@ -16,6 +17,7 @@ import { __asyncDelegator } from 'tslib';
 })
 export class ReadComponent implements OnInit {
 
+  public BookGroup : BookGroup | undefined;
   public Book : Book | undefined;
   public Chapter: Chapter | undefined;
   public ShowChapters = true;
@@ -40,6 +42,7 @@ export class ReadComponent implements OnInit {
         if(v){
           this.Bible.SetVersion(v);
         }
+        this.BookGroup = this.Bible.Version.value.BookGroups.find(b=>b.Url == url[0].path + '/' + url[1].path);
         let b = this.Bible.Version.value.Books.find(b=>b.UniqueId == url[2].path);
         if(this.Book!=b){
           this.ScrollToVerse = true;

@@ -1,12 +1,20 @@
 <div class="content">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="['/' + this.Bible.Version.value.Url]">{{this.Bible.Version.value.Title}}</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/' + this.BookGroup?.Url]">{{this.BookGroup?.Title}}</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/' + this.Book?.Url]">{{this.Book?.Title}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{Chapter?.Number}}</li>
+    </ol>
+  </nav>
   <div class="book">
     <div class="title-bar">
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-outline-dark" (click)="previousChapter()">{{ 'PREVIOUS' | translate }}</button>
         <div class="btn-group btn-group" role="group">
-          <button type="button" class="btn btn-outline-dark dropdown-toggle" [routerLink]="['/']">
+          <button type="button" class="btn btn-outline-dark dropdown-toggle" [routerLink]="['/',this.Bible.Version.value.Url]">
             {{Book?.Title}}
-          </button>          
+          </button>
         </div>
         <div class="btn-group btn-group" role="group">
           <button type="button" class="btn btn-outline-dark dropdown-toggle" (click)="toggleChapters()">
