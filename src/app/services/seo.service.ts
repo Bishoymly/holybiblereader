@@ -29,6 +29,8 @@ export class SEOService {
     }
 
     link.setAttribute('href', canURL);
+    this.meta.removeTag('property="og:url"');
+    this.meta.addTag({ property: 'og:url', content: canURL});
   }
 
   setTitle(title: string){
